@@ -15,6 +15,15 @@
 * `npm run test:watch`
   * execute tests in watch mode
 
+# Cherry-picking jest features
+## jest-diff
+* `npm add --save-dev jest-diff`
+* `node lib/searchMovies_diff.test.js`
+  * Problems:
+    * Problem1: 'TypeError: diff is not a function'
+      * Attempt1: `npm install jest-diff` & `node lib/searchMovies_diff.test.js` 
+      * Solution: TODO:
+
 # Notes
 * NO configuration needed -- as you can see in this repo --
 
