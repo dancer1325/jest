@@ -7,6 +7,7 @@
   * 6x faster
   * instant feedback
   * better development experience
+  * watch mode
 * Examples
   * Check '../examples/emoji-cinema'
 

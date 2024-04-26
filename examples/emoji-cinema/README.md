@@ -12,3 +12,9 @@
 
 # How to run the tests?
 * `npm run test`
+* `npm run test:watch`
+  * execute tests in watch mode
+
+# Notes
+* NO configuration needed -- as you can see in this repo --
+
