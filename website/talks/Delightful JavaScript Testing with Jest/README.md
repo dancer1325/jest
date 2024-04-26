@@ -56,4 +56,10 @@
   * lint rules
   * documentation
 
-* TODO: 
+# Blazing fast snapshot testing in Jest23
+* New snapshot features
+  * better snapshot summaries
+  * interactive snapshot mode
+  * property matchers
+
+* TODO: https://www.youtube.com/watch?v=cAKYQpTC7MA
