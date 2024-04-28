@@ -37,3 +37,12 @@
         * TODO:
       * `npm install --save-dev @types/jest` / `yarn add --dev @types/jest` / `pnpm add --save-dev @types/jest`
         * TODO:
+* use eslint
+  * ways
+    * import Jest global helpers (`describe` / `it` / ...)
+      * Reason: avoid no-undef errors from ESLint
+      * TODO:
+    * configure eslint environment
+      * TODO:
+    * use 'eslint-plugin-jest'
+      * TODO:
