@@ -14,3 +14,11 @@
 * Install jest globally
   * `npm install jest --global` / `yarn global add jest`
   * `jest test`
+
+# Additional configuration
+* `npm init jest` / `yarn create jest` / `pnpm create jest`
+  * generate a basic 'jest.config' file
+* use babel
+  * `npm install --save-dev babel-jest @babel/core @babel/preset-env` / `yarn add --dev babel-jest @babel/core @babel/preset-env` / `pnpm add --save-dev babel-jest @babel/core @babel/preset-env`
+    * install babel required packages
+  * add 'babel.config.js' file
