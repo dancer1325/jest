@@ -9,7 +9,7 @@
     * Problems:
       * Problem1: 'npm ERR! Unsupported URL Type "workspace:": workspace:*'
         * Attempt1: Remove 'workspace' references, specifying concrete versions
-        * Solution: Update devDependencies
+        * Solution: Update devDependencies manually & `nvm use v16.13.2`
   * `npm run test` / `yarn test`
 * Install jest globally
   * `npm install jest --global` / `yarn global add jest`
@@ -22,3 +22,10 @@
   * `npm install --save-dev babel-jest @babel/core @babel/preset-env` / `yarn add --dev babel-jest @babel/core @babel/preset-env` / `pnpm add --save-dev babel-jest @babel/core @babel/preset-env`
     * install babel required packages
   * add 'babel.config.js' file
+* use typescript
+  * via babel
+    * follow 'use babel' steps
+    * `npm install --save-dev @babel/preset-typescript` / `yarn add --dev @babel/preset-typescript` / `pnpm add --save-dev @babel/preset-typescript`
+    * add '@babel/preset-typescript' to 'babel.config.js' file
+    * add 'example.test.ts'
+    * run the tests -- previous section --
