@@ -29,3 +29,4 @@
     * add '@babel/preset-typescript' to 'babel.config.js' file
     * add 'example.test.ts'
     * run the tests -- previous section --
+  * via 'ts-jest' -- [link](https://kulshekhar.github.io/ts-jest/)
