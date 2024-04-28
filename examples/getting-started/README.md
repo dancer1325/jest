@@ -23,10 +23,17 @@
     * install babel required packages
   * add 'babel.config.js' file
 * use typescript
-  * via babel
-    * follow 'use babel' steps
-    * `npm install --save-dev @babel/preset-typescript` / `yarn add --dev @babel/preset-typescript` / `pnpm add --save-dev @babel/preset-typescript`
-    * add '@babel/preset-typescript' to 'babel.config.js' file
-    * add 'example.test.ts'
-    * run the tests -- previous section --
-  * via 'ts-jest' -- [link](https://kulshekhar.github.io/ts-jest/)
+  * ways to use
+    * via babel
+      * follow 'use babel' steps
+      * `npm install --save-dev @babel/preset-typescript` / `yarn add --dev @babel/preset-typescript` / `pnpm add --save-dev @babel/preset-typescript`
+      * add '@babel/preset-typescript' to 'babel.config.js' file
+      * add 'example.test.ts'
+      * run the tests -- previous section --
+    * via 'ts-jest' -- [link](https://kulshekhar.github.io/ts-jest/)
+  * & Jest global APIs (check '../API/Globals')
+    * ways
+      * `npm install --save-dev @jest/globals` / `yarn add --dev @jest/globals` / `pnpm add --save-dev @jest/globals` + import the APIs
+        * TODO:
+      * `npm install --save-dev @types/jest` / `yarn add --dev @types/jest` / `pnpm add --save-dev @types/jest`
+        * TODO:
