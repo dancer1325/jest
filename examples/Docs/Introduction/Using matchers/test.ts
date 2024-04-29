@@ -169,3 +169,9 @@ test('floating point', () => {
   //expect(value).toBe(0.3);                fails !!  -- because of rounding error
   expect(value).toBeCloseTo(0.3); // This works.
 });
+
+// 7.       strings
+test('string    .toMatch(regularExpressions)', () => {
+  expect('team').not.toMatch(/I/);    // I  case sensitive
+  expect('Christoph').toMatch(/stop/);    // stop  case sensitive
+});

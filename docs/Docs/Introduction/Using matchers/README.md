@@ -38,6 +38,8 @@
     - floating
       - `.toBeCloseTo()`
         - **Note:** 👁️ replacement of `.toEqual()` 👁️
+  - String
+    - `.toMatch(regularExpressions)`
   - complete list in '../API/Expect'
 
 ## Notes
