@@ -151,3 +151,21 @@ test('truthiness matchers  for  zero', () => {
   expect(z).not.toBeTruthy();
   expect(z).toBeFalsy();
 });
+
+// 6.       numbers specific
+test('integers', () => {
+  const value = 2 + 2;
+  expect(value).toBeGreaterThan(3);
+  expect(value).toBeGreaterThanOrEqual(3.5);
+  expect(value).toBeLessThan(5);
+  expect(value).toBeLessThanOrEqual(4.5);
+
+  // toBe and toEqual are equivalent for numbers
+  expect(value).toBe(4);
+  expect(value).toEqual(4);
+});
+test('floating point', () => {
+  const value = 0.1 + 0.2;
+  //expect(value).toBe(0.3);                fails !!  -- because of rounding error
+  expect(value).toBeCloseTo(0.3); // This works.
+});

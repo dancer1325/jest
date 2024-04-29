@@ -29,6 +29,15 @@
       - matches  == 👁️ `if` as true 👁️
     - `.toBeFalsy()`
       - matches  == 👁️ `if` as false 👁️
+  - numbers specific
+    - integers
+      - `.toBeGreaterThan()`
+      - `.toBeGreaterThanOrEqual()`
+      - `.toBeLessThan()`
+      - `.toBeLessThanOrEqual()`
+    - floating
+      - `.toBeCloseTo()`
+        - **Note:** 👁️ replacement of `.toEqual()` 👁️
   - complete list in '../API/Expect'
 
 ## Notes
