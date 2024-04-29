@@ -40,6 +40,8 @@
         - **Note:** 👁️ replacement of `.toEqual()` 👁️
   - String
     - `.toMatch(regularExpressions)`
+  - arrays & iterables
+    - `.toContain()`
   - complete list in '../API/Expect'
 
 ## Notes

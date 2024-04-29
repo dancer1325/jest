@@ -175,3 +175,18 @@ test('string    .toMatch(regularExpressions)', () => {
   expect('team').not.toMatch(/I/);    // I  case sensitive
   expect('Christoph').toMatch(/stop/);    // stop  case sensitive
 });
+
+// 8.       arrays & iterables
+test('arrays & iterables', () => {
+  // 8.1 array
+  const shoppingList = [
+    'diapers',
+    'kleenex',
+    'trash bags',
+    'paper towels',
+    'milk',
+  ];
+  expect(shoppingList).toContain('milk');
+  // 8.2  iterable
+  expect(new Set(shoppingList)).toContain('milk');    // Set    is an iterable object
+});
