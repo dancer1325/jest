@@ -65,15 +65,15 @@ test('.toEqual() - object - ignoring keys with', () => {
   expect(ignoring).toEqual(expectedUserInfo);
 });
 
-// 2.     .toStrictEqual()
-// 2.1 array
+// 3.     .toStrictEqual()
+// 3.1 array
 test('.toStrictEqual() - array', () => {
   const data = {one: 1};
   // @ts-ignore
   data['two'] = 2;
   expect(data).toStrictEqual({one: 1, two: 2});
 });
-// 2.2 object
+// 3.2 object
 test('.toStrictEqual() - object', () => {
   const person = {
     name: 'John Doe',
@@ -94,7 +94,7 @@ test('.toStrictEqual() - object', () => {
 
   expect(person).toStrictEqual(expectedPerson);
 });
-// 2.3 ignores object keys with       --  Fails   -- Reason: it does NOT make these ignores!!!
+// 3.3 ignores object keys with       --  Fails   -- Reason: it does NOT make these ignores!!!
 test('.toStrictEqual() - object - ignoring keys with', () => {
   const ignoring = {
     id: 123,
@@ -123,4 +123,13 @@ test('.toStrictEqual() - object - ignoring keys with', () => {
   };
 
   expect(ignoring).toStrictEqual(expectedUserInfo);
+});
+
+// 4.       .not.SomeOfThePreviousOnes()
+test('.not.SomeOfThePreviousOnes()', () => {
+  for (let a = 1; a < 10; a++) {
+    for (let b = 1; b < 10; b++) {
+      expect(a + b).not.toBe(0);
+    }
+  }
 });

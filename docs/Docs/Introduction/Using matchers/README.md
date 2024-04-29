@@ -16,6 +16,8 @@
   - `.toStrictEqual()`
     - == `.toEqual()`
       - 👁️ BUT without making previous ignores 👁️
+  - `.not.SomeOfThePreviousOnes()`
+    - opposite
   - complete list in '../API/Expect'
 
 ## Notes
