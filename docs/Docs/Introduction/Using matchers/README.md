@@ -18,6 +18,17 @@
       - 👁️ BUT without making previous ignores 👁️
   - `.not.SomeOfThePreviousOnes()`
     - opposite
+  - truthiness
+    - `.toBeNull()`
+      - matches 👁️ JUST with `null` 👁️
+    - `.toBeUndefined()`
+      - matches 👁️ JUST with `undefined` 👁️
+    - `.toBeDefined()`
+      - matches 👁️ JUST with NOT`undefined` 👁️
+    - `.toBeTruthy()`
+      - matches  == 👁️ `if` as true 👁️
+    - `.toBeFalsy()`
+      - matches  == 👁️ `if` as false 👁️
   - complete list in '../API/Expect'
 
 ## Notes
