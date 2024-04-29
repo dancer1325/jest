@@ -13,6 +13,9 @@
         - array items `undefined`
         - array sparseness
         - object type mismatch
+  - `.toStrictEqual()`
+    - == `.toEqual()`
+      - 👁️ BUT without making previous ignores 👁️
   - complete list in '../API/Expect'
 
 ## Notes

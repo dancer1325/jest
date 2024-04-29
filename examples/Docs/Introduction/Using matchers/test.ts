@@ -64,3 +64,63 @@ test('.toEqual() - object - ignoring keys with', () => {
 
   expect(ignoring).toEqual(expectedUserInfo);
 });
+
+// 2.     .toStrictEqual()
+// 2.1 array
+test('.toStrictEqual() - array', () => {
+  const data = {one: 1};
+  // @ts-ignore
+  data['two'] = 2;
+  expect(data).toStrictEqual({one: 1, two: 2});
+});
+// 2.2 object
+test('.toStrictEqual() - object', () => {
+  const person = {
+    name: 'John Doe',
+    age: 30,
+    address: {
+      city: 'New York',
+      country: 'USA'
+    }
+  };
+  const expectedPerson = {
+    name: 'John Doe',
+    age: 30,
+    address: {
+      city: 'New York',
+      country: 'USA'
+    }
+  };
+
+  expect(person).toStrictEqual(expectedPerson);
+});
+// 2.3 ignores object keys with       --  Fails   -- Reason: it does NOT make these ignores!!!
+test('.toStrictEqual() - object - ignoring keys with', () => {
+  const ignoring = {
+    id: 123,
+    name: 'John Doe',
+    email: undefined,   // property undefined     / NOT appear in expected    --> mismatch object type
+    hobbies: ['reading', 'coding', undefined],   // Sparse array with undefined item
+    jobHistory: {
+      current: {
+        title: 'Software Engineer',
+        company: 'TechCo'
+      },
+      previous: 'Web Developer' // Object type mismatch
+    }
+  }
+  const expectedUserInfo = {
+    id: 123,
+    name: 'John Doe',
+    hobbies: ['reading', 'coding'], // Sparse array with undefined item
+    jobHistory: {
+      current: {
+        title: 'Software Engineer',
+        company: 'TechCo'
+      },
+      previous: 'Web Developer' // Object type mismatch
+    }
+  };
+
+  expect(ignoring).toStrictEqual(expectedUserInfo);
+});
