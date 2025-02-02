@@ -1,35 +1,24 @@
 # Jest website
 
-The Jest website is based on [Docusaurus 2](http://docusaurus.io/).
+* -- based on -- [Docusaurus 2](http://docusaurus.io/)
 
 ## Run the dev server
 
-You will need Node >=14.
-
-The first time, get all the dependencies loaded via
-
-```bash
-yarn
-```
-
-in the root directory.
-
-Fetch `backers.json` file by running
-
-```bash
-node fetchSupporters.js
-```
-
-Then, run the server via
-
-```bash
-yarn start
-```
-
-Note, you can also use `yarn workspace jest-website start` from the root of the Jest monorepo.
+* requirements
+  * Node v14+
+* steps
+  * | root directory,
+    * `yarn`
+      * == get ALL dependencies
+  * `node fetchSupporters.js`
+    * fetch `backers.json`
+  * ALTERNATIVES -- to -- run the server
+    * `yarn start`
+    * `yarn workspace jest-website start`
 
 ## Publish the website
 
+* TODO:
 The site is deployed on each PR merged to main by Netlify:
 
 - Netlify site: https://app.netlify.com/sites/jestjs
