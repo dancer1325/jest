@@ -3,6 +3,7 @@ id: using-matchers
 title: Using Matchers
 ---
 
+* TODO:
 Jest uses "matchers" to let you test values in different ways. This document will introduce some commonly used matchers. For the full list, see the [`expect` API doc](ExpectAPI.md).
 
 ## Common Matchers
@@ -176,3 +177,5 @@ The function that throws an exception needs to be invoked within a wrapping func
 This is just a taste. For a complete list of matchers, check out the [reference docs](ExpectAPI.md).
 
 Once you've learned about the matchers that are available, a good next step is to check out how Jest lets you [test asynchronous code](TestingAsyncCode.md).
+
+* _Example:_ [here](/examples/Docs/Using%20matchers)

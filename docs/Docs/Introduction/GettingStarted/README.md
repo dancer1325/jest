@@ -1,1 +1,0 @@
-* Check 'examples/gettingStarted'

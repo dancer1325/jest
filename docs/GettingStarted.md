@@ -3,6 +3,7 @@ id: getting-started
 title: Getting Started
 ---
 
+* TODO:
 Install Jest using your favorite package manager:
 
 ```bash npm2yarn
@@ -240,3 +241,5 @@ Or use [`eslint-plugin-jest`](https://github.com/jest-community/eslint-plugin-je
   ]
 }
 ```
+
+* _Example:_ [here](/examples/Docs/getting-started)
