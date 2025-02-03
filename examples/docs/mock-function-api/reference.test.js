@@ -56,4 +56,24 @@ test('mockImplementationOnce', () => {
   mockFn(); // 'default'
 });
 
+// 7.   .mockName(name)
+// TODO:
+
+// 8.   .mockReturnThis()
+
+// 9.   .mockReturnValue(value)
+
+// 10.   .mockReturnValueOnce(value)
+
+
+// 11.   .mockResolvedValue(value)
+// ==     shorthand for --   👀`.mockImplementation(() => Promise.resolve(value));` 👀
+// TODO: How to make it run the NEXT as test
+jest.fn().mockImplementation(() => Promise.resolve(value));
+// TODO: comprehend
+test('.mockResolvedValue(value)', async () => {
+    const asyncMock = jest.fn().mockResolvedValue(43);
+
+    await asyncMock(); // 43
+  });
 

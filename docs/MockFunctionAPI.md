@@ -279,33 +279,11 @@ mockFn(); // 'default'
 
 ### `mockFn.mockResolvedValue(value)`
 
-* == shorthand for
-
-```js
-jest.fn().mockImplementation(() => Promise.resolve(value));
-```
+* 👀== shorthand for `.mockImplementation(() => Promise.resolve(value));` 👀
 
 * use cases
   * | async tests,
-    * mock async functions 
-
-```js tab
-test('async test', async () => {
-  const asyncMock = jest.fn().mockResolvedValue(43);
-
-  await asyncMock(); // 43
-});
-```
-
-```ts tab
-import {jest, test} from '@jest/globals';
-
-test('async test', async () => {
-  const asyncMock = jest.fn<() => Promise<number>>().mockResolvedValue(43);
-
-  await asyncMock(); // 43
-});
-```
+    * mock async functions
 
 ### `mockFn.mockResolvedValueOnce(value)`
 
