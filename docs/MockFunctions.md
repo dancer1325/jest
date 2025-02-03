@@ -3,92 +3,36 @@ id: mock-functions
 title: Mock Functions
 ---
 
-Mock functions allow you to test the links between code by erasing the actual implementation of a function, capturing calls to the function (and the parameters passed in those calls), capturing instances of constructor functions when instantiated with `new`, and allowing test-time configuration of return values.
-
-There are two ways to mock functions: Either by creating a mock function to use in test code, or writing a [`manual mock`](ManualMocks.md) to override a module dependency.
-
-## Using a mock function
-
-Let's imagine we're testing an implementation of a function `forEach`, which invokes a callback for each item in a supplied array.
-
-```js title="forEach.js"
-export function forEach(items, callback) {
-  for (const item of items) {
-    callback(item);
-  }
-}
-```
-
-To test this function, we can use a mock function, and inspect the mock's state to ensure the callback is invoked as expected.
-
-```js title="forEach.test.js"
-const forEach = require('./forEach');
-
-const mockCallback = jest.fn(x => 42 + x);
-
-test('forEach mock function', () => {
-  forEach([0, 1], mockCallback);
-
-  // The mock function was called twice
-  expect(mockCallback.mock.calls).toHaveLength(2);
-
-  // The first argument of the first call to the function was 0
-  expect(mockCallback.mock.calls[0][0]).toBe(0);
-
-  // The first argument of the second call to the function was 1
-  expect(mockCallback.mock.calls[1][0]).toBe(1);
-
-  // The return value of the first call to the function was 42
-  expect(mockCallback.mock.results[0].value).toBe(42);
-});
-```
+* Mock functions
+  * == fake functions
+  * allows you
+    * capturing 
+      * function's call
+      * instances of constructor functions / instantiated -- via -- `new`
+    * configuring return values
+  * ways
+    * creating a mock function
+    * writing a [`manual mock`](ManualMocks.md) / override a module dependency
+  * _Example:_ [here](/examples/docs/mock-functions)
 
 ## `.mock` property
 
-All mock functions have this special `.mock` property, which is where data about how the function has been called and what the function returned is kept. The `.mock` property also tracks the value of `this` for each call, so it is possible to inspect this as well:
-
-```javascript
-const myMock1 = jest.fn();
-const a = new myMock1();
-console.log(myMock1.mock.instances);
-// > [ <a> ]
-
-const myMock2 = jest.fn();
-const b = {};
-const bound = myMock2.bind(b);
-bound();
-console.log(myMock2.mock.contexts);
-// > [ <b> ]
-```
-
-These mock members are very useful in tests to assert how these functions get called, instantiated, or what they returned:
-
-```javascript
-// The function was called exactly once
-expect(someMockFunction.mock.calls).toHaveLength(1);
-
-// The first arg of the first call to the function was 'first arg'
-expect(someMockFunction.mock.calls[0][0]).toBe('first arg');
-
-// The second arg of the first call to the function was 'second arg'
-expect(someMockFunction.mock.calls[0][1]).toBe('second arg');
-
-// The return value of the first call to the function was 'return value'
-expect(someMockFunction.mock.results[0].value).toBe('return value');
-
-// The function was called with a certain `this` context: the `element` object.
-expect(someMockFunction.mock.contexts[0]).toBe(element);
-
-// This function was instantiated exactly twice
-expect(someMockFunction.mock.instances.length).toBe(2);
-
-// The object returned by the first instantiation of this function
-// had a `name` property whose value was set to 'test'
-expect(someMockFunction.mock.instances[0].name).toBe('test');
-
-// The first argument of the last call to the function was 'test'
-expect(someMockFunction.mock.lastCall[0]).toBe('test');
-```
+* existing | ALL mock functions 
+* `.mock.calls`
+  * == [] about
+    * 👀how the function -- has been -- called 👀
+  * see [mockFunctionAPI](MockFunctionAPI.md#mockfnmockcalls)
+* `.mock.results`
+  * == [] about
+    * 👀returned -- by the -- function👀 
+  * see [mockFunctionAPI](MockFunctionAPI.md#mockfnmockresults) 
+* `.mock.contexts`
+  * == [] about
+    * `this` / EACH call
+  * see [mockFunctionAPI](MockFunctionAPI.md#mockfnmockcontexts)
+* `.mock.instances`
+  * see [mockFunctionAPI](MockFunctionAPI.md#mockfnmockinstances)
+* see MORE [here](MockFunctionAPI.md)
 
 ## Mock Return Values
 
@@ -105,7 +49,9 @@ console.log(myMock(), myMock(), myMock(), myMock());
 // > 10, 'x', true, true
 ```
 
-Mock functions are also very effective in code that uses a functional continuation-passing style. Code written in this style helps avoid the need for complicated stubs that recreate the behavior of the real component they're standing in for, in favor of injecting values directly into the test right before they're used.
+Mock functions are also very effective in code that uses a functional continuation-passing style.
+Code written in this style helps avoid the need for complicated stubs that recreate the behavior of the real component they're standing in for, 
+in favor of injecting values directly into the test right before they're used.
 
 ```javascript
 const filterTestFn = jest.fn();
@@ -122,7 +68,9 @@ console.log(filterTestFn.mock.calls[0][0]); // 11
 console.log(filterTestFn.mock.calls[1][0]); // 12
 ```
 
-Most real-world examples actually involve getting ahold of a mock function on a dependent component and configuring that, but the technique is the same. In these cases, try to avoid the temptation to implement logic inside of any function that's not directly being tested.
+Most real-world examples actually involve getting ahold of a mock function on a dependent component and configuring that, 
+but the technique is the same. 
+In these cases, try to avoid the temptation to implement logic inside of any function that's not directly being tested.
 
 ## Mocking Modules
 
