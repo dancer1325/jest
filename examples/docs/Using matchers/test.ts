@@ -190,3 +190,17 @@ test('arrays & iterables', () => {
   // 8.2  iterable
   expect(new Set(shoppingList)).toContain('milk');    // Set    is an iterable object
 });
+
+// 9.       functions / throw Exceptions
+test('functions / throw Exceptions', () => {
+  function compileAndroidCode() {
+    throw new Error('you are using the wrong JDK');
+  }
+
+  expect(() => compileAndroidCode()).toThrow();
+  expect(() => compileAndroidCode()).toThrow(Error);
+
+  // You can also use the exact error message or a regexp
+  expect(() => compileAndroidCode()).toThrow('you are using the wrong JDK');
+  expect(() => compileAndroidCode()).toThrow(/JDK/);
+});
