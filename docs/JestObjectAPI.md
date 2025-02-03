@@ -3,24 +3,22 @@ id: jest-object
 title: The Jest Object
 ---
 
-The `jest` object is automatically in scope within every test file. The methods in the `jest` object help create mocks and let you control Jest's overall behavior. It can also be imported explicitly by via `import {jest} from '@jest/globals'`.
+* `jest` object
+  * 💡AVAILABLE | ANY test file / WITHOUT importing it 💡
+    * if you want to import -> use `import {jest} from '@jest/globals'`
+  * 's methods
+    * let you
+      * create mocks
+      * control Jest's overall behavior
+  * _Example:_ [here](/examples/docs/jest-object-api)
 
-import TypeScriptExamplesNote from './_TypeScriptExamplesNote.md';
-
-<TypeScriptExamplesNote />
-
-## Methods
-
-import TOCInline from '@theme/TOCInline';
-
-<TOCInline toc={toc.slice(1)} />
-
----
+* see [TypeScriptExamplesNote](_TypeScriptExamplesNote.md)
 
 ## Mock Modules
 
 ### `jest.disableAutomock()`
 
+* TODO:
 Disables automatic mocking in the module loader.
 
 :::info
@@ -592,23 +590,11 @@ const otherCopyOfMyModule = await import('myModule');
 
 ### `jest.fn(implementation?)`
 
-Returns a new, unused [mock function](MockFunctionAPI.md). Optionally takes a mock implementation.
+* returns a [mock function](MockFunctionAPI.md)
+  * new
+  * unused
 
-```js
-const mockFn = jest.fn();
-mockFn();
-expect(mockFn).toHaveBeenCalled();
-
-// With a mock implementation:
-const returnsTrue = jest.fn(() => true);
-console.log(returnsTrue()); // true;
-```
-
-:::tip
-
-See the [Mock Functions](MockFunctionAPI.md#jestfnimplementation) page for details on TypeScript usage.
-
-:::
+* see the [Mock Functions](MockFunctionAPI.md#jestfnimplementation)
 
 ### `jest.isMockFunction(fn)`
 
