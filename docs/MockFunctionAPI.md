@@ -69,7 +69,7 @@ For example: A mock function `f` that has been called three times, returning `'r
 
 ### `mockFn.mock.instances`
 
-An array that contains all the object instances that have been instantiated from this mock function using `new`.
+* == [] of object instances / from this mock function -- via `new`, have been -- instantiated 
 
 For example: A mock function that has been instantiated twice would have the following `mock.instances` array:
 
@@ -87,7 +87,8 @@ mockFn.mock.instances[1] === b; // true
 
 An array that contains the contexts for all calls of the mock function.
 
-A context is the `this` value that a function receives when called. The context can be set using `Function.prototype.bind`, `Function.prototype.call` or `Function.prototype.apply`.
+A context is the `this` value that a function receives when called. 
+The context can be set using `Function.prototype.bind`, `Function.prototype.call` or `Function.prototype.apply`.
 
 For example:
 
