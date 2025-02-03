@@ -1,1 +1,1 @@
-* pasted -- from -- [sidebars.json](/website/sidebars.json)
+* see [sidebars.json](/website/sidebars.json)
