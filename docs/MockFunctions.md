@@ -74,7 +74,8 @@ In these cases, try to avoid the temptation to implement logic inside of any fun
 
 ## Mocking Modules
 
-Suppose we have a class that fetches users from our API. The class uses [axios](https://github.com/axios/axios) to call the API then returns the `data` attribute which contains all the users:
+Suppose we have a class that fetches users from our API. 
+The class uses [axios](https://github.com/axios/axios) to call the API then returns the `data` attribute which contains all the users:
 
 ```js title="users.js"
 import axios from 'axios';
@@ -88,9 +89,11 @@ class Users {
 export default Users;
 ```
 
-Now, in order to test this method without actually hitting the API (and thus creating slow and fragile tests), we can use the `jest.mock(...)` function to automatically mock the axios module.
+Now, in order to test this method without actually hitting the API (and thus creating slow and fragile tests), 
+we can use the `jest.mock(...)` function to automatically mock the axios module.
 
-Once we mock the module we can provide a `mockResolvedValue` for `.get` that returns the data we want our test to assert against. In effect, we are saying that we want `axios.get('/users.json')` to return a fake response.
+Once we mock the module we can provide a `mockResolvedValue` for `.get` that returns the data we want our test to assert against. 
+In effect, we are saying that we want `axios.get('/users.json')` to return a fake response.
 
 ```js title="users.test.js"
 import axios from 'axios';
