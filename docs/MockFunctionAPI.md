@@ -147,92 +147,22 @@ The [`restoreMocks`](configuration#restoremocks-boolean) configuration option is
 
 :::
 
-### `mockFn.mockImplementation(fn)`
+### `mockFn.mockImplementation(functionImplementationOfTheMock)`
+ 
+* allows
+  * 👀== mock function / function implementation 👀
+    * track ALL
+      * calls
+      * instances
+    * 👀vs mock function / NO implementation 👀
+      * if mock is called -> implementation -- will be -- executed
+    * 👀== `jest.fn(implementation)` 👀
+      * shorthand
+  * 👀 mocking class constructors 👀
 
-Accepts a function that should be used as the implementation of the mock. The mock itself will still record all calls that go into and instances that come from itself – the only difference is that the implementation will also be executed when the mock is called.
-
-:::tip
-
-`jest.fn(implementation)` is a shorthand for `jest.fn().mockImplementation(implementation)`.
-
-:::
-
-```js tab
-const mockFn = jest.fn(scalar => 42 + scalar);
-
-mockFn(0); // 42
-mockFn(1); // 43
-
-mockFn.mockImplementation(scalar => 36 + scalar);
-
-mockFn(2); // 38
-mockFn(3); // 39
-```
-
-```ts tab
-import {jest} from '@jest/globals';
-
-const mockFn = jest.fn((scalar: number) => 42 + scalar);
-
-mockFn(0); // 42
-mockFn(1); // 43
-
-mockFn.mockImplementation(scalar => 36 + scalar);
-
-mockFn(2); // 38
-mockFn(3); // 39
-```
-
-`.mockImplementation()` can also be used to mock class constructors:
-
-```js tab={"span":2} title="SomeClass.js"
-module.exports = class SomeClass {
-  method(a, b) {}
-};
-```
-
-```js title="SomeClass.test.js"
-const SomeClass = require('./SomeClass');
-
-jest.mock('./SomeClass'); // this happens automatically with automocking
-
-const mockMethod = jest.fn();
-SomeClass.mockImplementation(() => {
-  return {
-    method: mockMethod,
-  };
-});
-
-const some = new SomeClass();
-some.method('a', 'b');
-
-console.log('Calls to method:', mockMethod.mock.calls);
-```
-
-```ts tab={"span":2} title="SomeClass.ts"
-export class SomeClass {
-  method(a: string, b: string): void {}
-}
-```
-
-```ts title="SomeClass.test.ts"
-import {jest} from '@jest/globals';
-import {SomeClass} from './SomeClass';
-
-jest.mock('./SomeClass'); // this happens automatically with automocking
-
-const mockMethod = jest.fn<(a: string, b: string) => void>();
-jest.mocked(SomeClass).mockImplementation(() => {
-  return {
-    method: mockMethod,
-  };
-});
-
-const some = new SomeClass();
-some.method('a', 'b');
-
-console.log('Calls to method:', mockMethod.mock.calls);
-```
+* _Examples:_
+  * [reference](/examples/docs/mock-function-api/reference.test.js)
+  * [mockImplementation | ts](/examples/docs/mock-function-api/mockImplementation.test.ts)
 
 ### `mockFn.mockImplementationOnce(fn)`
 
@@ -378,13 +308,15 @@ mockFn(); // 'default'
 
 ### `mockFn.mockResolvedValue(value)`
 
-Shorthand for:
+* == shorthand for
 
 ```js
 jest.fn().mockImplementation(() => Promise.resolve(value));
 ```
 
-Useful to mock async functions in async tests:
+* use cases
+  * | async tests,
+    * mock async functions 
 
 ```js tab
 test('async test', async () => {
