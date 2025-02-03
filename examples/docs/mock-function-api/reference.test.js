@@ -34,3 +34,26 @@ test('mockImplementation', () => {
   console.log('Calls to method:', mockMethod.mock.calls);
 });
 
+// 6.   .mockImplementationOnce(functionImplementationOfTheMock)
+test('mockImplementationOnce', () => {
+  // TODO: How to pass callback?
+  /*const mockFn = jest
+    .fn()
+    .mockImplementationOnce(cb => cb(null, true))
+    .mockImplementationOnce(cb => cb(null, false));
+
+  mockFn((err, val) => console.log(val)); // true
+  mockFn((err, val) => console.log(val)); // false*/
+
+  const mockFn = jest
+    .fn(() => console.log('default'))    //  mock implementation -- used as -- default value
+    .mockImplementationOnce(() => console.log('first call'))
+    .mockImplementationOnce(() => console.log('second call'));
+
+  mockFn(); // 'first call'
+  mockFn(); // 'second call'
+  mockFn(); // 'default'
+  mockFn(); // 'default'
+});
+
+

@@ -150,7 +150,7 @@ The [`restoreMocks`](configuration#restoremocks-boolean) configuration option is
 ### `mockFn.mockImplementation(functionImplementationOfTheMock)`
  
 * allows
-  * 👀== mock function / function implementation 👀
+  * 👀mocking function / function implementation 👀
     * track ALL
       * calls
       * instances
@@ -164,45 +164,16 @@ The [`restoreMocks`](configuration#restoremocks-boolean) configuration option is
   * [reference](/examples/docs/mock-function-api/reference.test.js)
   * [mockImplementation | ts](/examples/docs/mock-function-api/mockImplementation.test.ts)
 
-### `mockFn.mockImplementationOnce(fn)`
+### `mockFn.mockImplementationOnce(functionImplementationOfTheMock)`
 
-Accepts a function that will be used as an implementation of the mock for one call to the mocked function. Can be chained so that multiple function calls produce different results.
+* allows
+  * mocking function / ⚠️function implementation invoked 1! ⚠️
+* uses
+  * chain multiple mocking function / produce DIFFERENT results
 
-```js tab
-const mockFn = jest
-  .fn()
-  .mockImplementationOnce(cb => cb(null, true))
-  .mockImplementationOnce(cb => cb(null, false));
-
-mockFn((err, val) => console.log(val)); // true
-mockFn((err, val) => console.log(val)); // false
-```
-
-```ts tab
-import {jest} from '@jest/globals';
-
-const mockFn = jest
-  .fn<(cb: (a: null, b: boolean) => void) => void>()
-  .mockImplementationOnce(cb => cb(null, true))
-  .mockImplementationOnce(cb => cb(null, false));
-
-mockFn((err, val) => console.log(val)); // true
-mockFn((err, val) => console.log(val)); // false
-```
-
-When the mocked function runs out of implementations defined with `.mockImplementationOnce()`, it will execute the default implementation set with `jest.fn(() => defaultValue)` or `.mockImplementation(() => defaultValue)` if they were called:
-
-```js
-const mockFn = jest
-  .fn(() => 'default')
-  .mockImplementationOnce(() => 'first call')
-  .mockImplementationOnce(() => 'second call');
-
-mockFn(); // 'first call'
-mockFn(); // 'second call'
-mockFn(); // 'default'
-mockFn(); // 'default'
-```
+* _Examples:_
+  * [reference](/examples/docs/mock-function-api/reference.test.js)
+  * [mockImplementationOnce | ts](/examples/docs/mock-function-api/mockImplementationOnce.test.ts)
 
 ### `mockFn.mockName(name)`
 
