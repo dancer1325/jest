@@ -1,27 +1,19 @@
----
-id: api
-title: Globals
----
+* == 💡methods & objects / AVAILABLE | your test files & global environment💡
+  * 👀NOT need `require` or `import`👀
+    * ALTHOUGH, you can EXPLICITLY import
+  
+      ```
+      import {describe, expect, test} from '@jest/globals'
+      ```
 
-In your test files, Jest puts each of these methods and objects into the global environment. You don't have to require or import anything to use them. However, if you prefer explicit imports, you can do `import {describe, expect, test} from '@jest/globals'`.
-
-import TypeScriptExamplesNote from './_TypeScriptExamplesNote.md';
-
-<TypeScriptExamplesNote />
-
-## Methods
-
-import TOCInline from '@theme/TOCInline';
-
-<TOCInline toc={toc.slice(1)} />
-
----
+* see ['./_TypeScriptExamplesNote.md'](_TypeScriptExamplesNote.md)
 
 ## Reference
 
 ### `afterAll(fn, timeout)`
 
-Runs a function after all the tests in this file have completed. If the function returns a promise or is a generator, Jest waits for that promise to resolve before continuing.
+Runs a function after all the tests in this file have completed
+* If the function returns a promise or is a generator, Jest waits for that promise to resolve before continuing.
 
 Optionally, you can provide a `timeout` (in milliseconds) for specifying how long to wait before aborting. The default timeout is 5 seconds.
 
@@ -467,37 +459,28 @@ test('will be run', () => {
 });
 ```
 
-### `test(name, fn, timeout)`
+### `test(testName, fn, timeout?)`
 
-Also under the alias: `it(name, fn, timeout)`
+* 's input
+  * `fn`
+    * == function / 
+      * 👀contains the expectations to test👀
+      * ⚠️if it returns a promise -> Jest will wait for resolving the promise BEFORE complete the test⚠️
+        * see [Testing Asynchronous Code](TestingAsyncCode.md)
+      * if you want to test [callbacks](TestingAsyncCode.md#callbacks) -> 
+        * Jest will wait BEFORE complete the test⚠️
+        * recommendations
+          * provide an argument / test the function
+            * USUALLY called `done`
+  * `timeout?: number = 5000`
+    * milliseconds
+    * == how long to wait BEFORE aborting
 
-All you need in a test file is the `test` method which runs a test. For example, let's say there's a function `inchesOfRain()` that should be zero. Your whole test could be:
+* 's alias -- `it(name, fn, timeout)` --
 
-```js
-test('did not rain', () => {
-  expect(inchesOfRain()).toBe(0);
-});
-```
-
-The first argument is the test name; the second argument is a function that contains the expectations to test. The third argument (optional) is `timeout` (in milliseconds) for specifying how long to wait before aborting. The default timeout is 5 seconds.
-
-If a **promise is returned** from `test`, Jest will wait for the promise to resolve before letting the test complete. For example, let's say `fetchBeverageList()` returns a promise that is supposed to resolve to a list that has `lemon` in it. You can test this with:
-
-```js
-test('has lemon in it', () => {
-  return fetchBeverageList().then(list => {
-    expect(list).toContain('lemon');
-  });
-});
-```
-
-Even though the call to `test` will return right away, the test doesn't complete until the promise resolves. For more details, see [Testing Asynchronous Code](TestingAsyncCode.md) page.
-
-:::tip
-
-Jest will also wait if you **provide an argument to the test function**, usually called `done`. This could be handy when you want to test [callbacks](TestingAsyncCode.md#callbacks).
-
-:::
+* | test file
+  * requirements
+    * ⚠️`test()`⚠️ / runs a test
 
 ### `test.concurrent(name, fn, timeout)`
 
@@ -511,7 +494,9 @@ Also under the alias: `it.concurrent(name, fn, timeout)`
 
 Use `test.concurrent` if you want the test to run concurrently.
 
-The first argument is the test name; the second argument is an asynchronous function that contains the expectations to test. The third argument (optional) is `timeout` (in milliseconds) for specifying how long to wait before aborting. The default timeout is 5 seconds.
+The first argument is the test name; the second argument is an asynchronous function that contains the expectations to test
+* The third argument (optional) is `timeout` (in milliseconds) for specifying how long to wait before aborting
+* The default timeout is 5 seconds.
 
 ```js
 test.concurrent('addition of 2 numbers', async () => {

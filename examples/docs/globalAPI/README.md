@@ -1,5 +1,5 @@
 # How has it been created?
-* `npm init` & enter 'example-getting-started' as project name
+* `npm init` & continuously enter
 * `npm install --save-dev jest` / `yarn add --dev jest` / `pnpm add --save-dev jest`
 
 # How to run the tests?
