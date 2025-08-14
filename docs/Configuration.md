@@ -22,39 +22,11 @@
 
 ## Options
 
-:::info
-
-You can retrieve Jest's defaults from `jest-config` to extend them if needed:
-
-```js tab
-const {defaults} = require('jest-config');
-
-/** @type {import('jest').Config} */
-const config = {
-  moduleDirectories: [...defaults.moduleDirectories, 'bower_components'],
-};
-
-module.exports = config;
-```
-
-```ts tab
-import type {Config} from 'jest';
-import {defaults} from 'jest-config';
-
-const config: Config = {
-  moduleDirectories: [...defaults.moduleDirectories, 'bower_components'],
-};
-
-export default config;
-```
-
-:::
-
-import TOCInline from '@theme/TOCInline';
-
-<TOCInline toc={toc.slice(2)} />
-
----
+* "jest-config"
+  * allows
+    * retrieving Jest's defaults
+  * uses
+    * extend Jest's defaults
 
 ## Reference
 
