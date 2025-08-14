@@ -1,0 +1,14 @@
+{
+  "name": "globalapi",
+  "version": "1.0.0",
+  "description": "* `npm init` & enter 'example-getting-started' as project name * `npm install --save-dev jest` / `yarn add --dev jest` / `pnpm add --save-dev jest`",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^30.0.5"
+  }
+}

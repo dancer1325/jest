@@ -1,94 +1,24 @@
----
-id: configuration
-title: Configuring Jest
----
+* Jest philosophy
+  * by default, works great
+    * if you need MORE configuration power -> keep on configuring
 
-The Jest philosophy is to work great by default, but sometimes you just need more configuration power.
-
-It is recommended to define the configuration in a dedicated JavaScript, TypeScript or JSON file. The file will be discovered automatically, if it is named `jest.config.js|ts|mjs|cjs|cts|json`. You can use [`--config`](CLI.md#--configpath) flag to pass an explicit path to the file.
-
-:::note
-
-Keep in mind that the resulting configuration object must always be JSON-serializable.
-
-:::
-
-The configuration file should simply export an object:
-
-```js tab
-/** @type {import('jest').Config} */
-const config = {
-  verbose: true,
-};
-
-module.exports = config;
-```
-
-```ts tab
-import type {Config} from 'jest';
-
-const config: Config = {
-  verbose: true,
-};
-
-export default config;
-```
-
-Or a function returning an object:
-
-```js tab
-/** @returns {Promise<import('jest').Config>} */
-module.exports = async () => {
-  return {
-    verbose: true,
-  };
-};
-```
-
-```ts tab
-import type {Config} from 'jest';
-
-export default async (): Promise<Config> => {
-  return {
-    verbose: true,
-  };
-};
-```
-
-:::tip
-
-To read TypeScript configuration files Jest requires [`ts-node`](https://npmjs.com/package/ts-node). Make sure it is installed in your project.
-
-:::
-
-The configuration also can be stored in a JSON file as a plain object:
-
-```json title="jest.config.json"
-{
-  "bail": 1,
-  "verbose": true
-}
-```
-
-Alternatively Jest's configuration can be defined through the `"jest"` key in the `package.json` of your project:
-
-```json title="package.json"
-{
-  "name": "my-project",
-  "jest": {
-    "verbose": true
-  }
-}
-```
-
-Also Jest's configuration json file can be referenced through the `"jest"` key in the `package.json` of your project:
-
-```json title="package.json"
-{
-  "name": "my-project",
-  "jest": "./path/to/config.json"
-}
-```
+* Jest configuration
+  * 💡ways to specify💡
+    * configuration file / 
+      * export 1 
+        * object OR
+        * function
+      * referenced -- by --
+        * use DEFAULT names
+          * == `jest.config.js|ts|mjs|cjs|cts|json`
+          * 👀recommended👀
+          * Reason:🧠AUTOMATICALLY discovered🧠
+        * use [`--config pathToConfigurationFile`](CLI.md#--configpath)
+        * "package.json"'s `jest` key
+    * DIRECTLY | "package.json" 
+  * requirements
+    * ⚠️object / MUST be JSON-serializable⚠️ 
+    * if you use "*.ts" -> `npm install ts-node`
 
 ## Options
 

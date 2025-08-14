@@ -1,8 +1,3 @@
----
-id: getting-started
-title: Getting Started
----
-
 * see [Example](/examples/docs/getting-started/README.md)
 
 ## Additional Configuration
