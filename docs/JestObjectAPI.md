@@ -1151,18 +1151,13 @@ This function is only available with the default [jest-circus](https://github.co
 
 ### `jest.setTimeout(timeout)`
 
-Set the default timeout interval (in milliseconds) for all tests and before/after hooks in the test file. This only affects the test file from which this function is called. The default timeout interval is 5 seconds if this method is not called.
-
-Example:
-
-```js
-jest.setTimeout(1000); // 1 second
-```
-
-:::tip
-
-To set timeout intervals on different tests in the same file, use the [`timeout` option on each individual test](GlobalAPI.md#testname-fn-timeout).
-
-If you want to set the timeout for all test files, use [`testTimeout`](Configuration.md#testtimeout-number) configuration option.
-
-:::
+* `timeout: number`
+  * milliseconds
+  * by default, 5"
+    * == if this method NOT called
+* set the default timeout interval | 
+  * ALL tests files
+    * -> use [`testTimeout`](Configuration.md#testtimeout-number) configuration option
+  * before/after hooks | test file
+    * == apply | ALL tests | SAME file
+    * -> use the [`timeout` option | EACH individual test](GlobalAPI.md#testtestname-fn-timeout) 
