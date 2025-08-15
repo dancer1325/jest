@@ -1,10 +1,11 @@
 # test-utils
 
-Private package exports utilities for multiple end-to-end tests or packages.
+* == private package /
+  * 👀exports utilities -- for -- MULTIPLE E2E tests OR packages👀
 
 ## alignedAnsiStyleSerializer
 
-Display colors concisely and clearly so we can review changes quickly and confidently:
+* TODO: Display colors concisely and clearly so we can review changes quickly and confidently:
 
 - reports when matchers fail
 - annotation and comparison lines from differences
