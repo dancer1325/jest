@@ -1516,51 +1516,16 @@ Default: `5`
 
 The number of seconds after which a test is considered as slow and reported as such in the results.
 
-### `snapshotFormat` \[object]
+### `snapshotFormat object`
 
-Default: `{escapeString: false, printBasicPrototype: false}`
+* by default,
+  * `{escapeString: false, printBasicPrototype: false}`
 
-Allows overriding specific snapshot formatting options documented in the [pretty-format readme](https://www.npmjs.com/package/pretty-format#usage-with-options), with the exceptions of `compareKeys` and `plugins`. For example, this config would have the snapshot formatter not print a prefix for "Object" and "Array":
-
-```js tab
-/** @type {import('jest').Config} */
-const config = {
-  snapshotFormat: {
-    printBasicPrototype: false,
-  },
-};
-
-module.exports = config;
-```
-
-```ts tab
-import type {Config} from 'jest';
-
-const config: Config = {
-  snapshotFormat: {
-    printBasicPrototype: false,
-  },
-};
-
-export default config;
-```
-
-```js title="some.test.js"
-test('does not show prototypes for object and array inline', () => {
-  const object = {
-    array: [{hello: 'Danger'}],
-  };
-  expect(object).toMatchInlineSnapshot(`
-    {
-      "array": [
-        {
-          "hello": "Danger",
-        },
-      ],
-    }
-  `);
-});
-```
+* allows
+  * 👀overriding specific snapshot formatting options / documented | [pretty-format](https://www.npmjs.com/package/pretty-format#usage-with-options)👀
+    * EXCEPTIONS
+      * `compareKeys`
+      * `plugins`
 
 ### `snapshotResolver` \[string]
 

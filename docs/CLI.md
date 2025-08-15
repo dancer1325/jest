@@ -76,11 +76,7 @@ jest --update-snapshot --detectOpenHandles
 
 ## Options
 
-:::note
-
-CLI options take precedence over values from the [Configuration](Configuration.md).
-
-:::
+* ⚠️CLI options's priority > [Configuration's priority](Configuration.md)⚠️
 
 ## Reference
 
