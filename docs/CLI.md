@@ -3,51 +3,45 @@ id: cli
 title: Jest CLI Options
 ---
 
-The `jest` command line runner has a number of useful options. You can run `jest --help` to view all available options. Many of the options shown below can also be used together to run tests exactly the way you want. Every one of Jest's [Configuration](Configuration.md) options can also be specified through the CLI.
+* `jest`'s options
+  * `jest --help`
+    * view ALL AVAILABLE options
+  * 👀ALL Jest's [configuration options](Configuration.md) can be specified -- through the -- CLI👀
 
-Here is a brief overview:
+## how to run -- from the -- CL
 
-## Running from the command line
+* `jest`
+  * run ALL tests
 
-Run all tests (default):
+* `jest fileNameTest` or `jest patternToTestFile`
+  * _Example:_
+    ```
+    # jest fileName
+    jest my-test
+    
+    # jest patternToTestFile
+    jest path/to/my-test.js
+    ```
 
-```bash
-jest
-```
+* `jest -o`
+  * run tests -- related to -- changed files (hg/git) / uncommitted
+    * 👀ALSO | subfolders' test👀
 
-Run only the tests that were specified with a pattern or filename:
+* `jest --findRelatedTests path/to/fileA.js path/to/fileB.js`
+  * run tests -- related to -- `path/to/fileA.js` & `path/to/fileB.js`
 
-```bash
-jest my-test #or
-jest path/to/my-test.js
-```
+* `jest -t nameOfSpec`
+  * run tests / match this spec name
+    * spec name | `describe`'s name OR `test`'s name
 
-Run tests related to changed files based on hg/git (uncommitted files):
+*
 
-```bash
-jest -o
-```
-
-Run tests related to `path/to/fileA.js` and `path/to/fileB.js`:
-
-```bash
-jest --findRelatedTests path/to/fileA.js path/to/fileB.js
-```
-
-Run tests that match this spec name (match against the name in `describe` or `test`, basically).
-
-```bash
-jest -t name-of-spec
-```
-
-Run watch mode:
-
-```bash
-jest --watch #runs jest -o by default
-jest --watchAll #runs all tests
-```
-
-Watch mode also enables to specify the name or path to a file to focus on a specific set of tests.
+  ```bash
+  jest --watch      #runs jest -o by default
+  jest --watchAll   #runs all tests
+  ```
+  * run watch mode
+    * enables to specify the name or path to a file | focus | specific set of tests
 
 ## Using with package manager
 
@@ -87,12 +81,6 @@ jest --update-snapshot --detectOpenHandles
 CLI options take precedence over values from the [Configuration](Configuration.md).
 
 :::
-
-import TOCInline from '@theme/TOCInline';
-
-<TOCInline toc={toc.slice(2)} />
-
----
 
 ## Reference
 
@@ -178,7 +166,15 @@ Print debugging info about your Jest config.
 
 ### `--detectOpenHandles`
 
-Attempt to collect and print open handles preventing Jest from exiting cleanly. Use this in cases where you need to use `--forceExit` in order for Jest to exit to potentially track down the reason. This implies `--runInBand`, making tests run serially. Implemented using [`async_hooks`](https://nodejs.org/api/async_hooks.html). This option has a significant performance penalty and should only be used for debugging.
+* allows
+  * collect & print open handles / prevent Jest -- from -- exiting cleanly
+* use cases
+  * you use `--forceExit`
+  * debugging
+    * Reason:🧠performance penalty🧠
+* -> `--runInBand`
+* implementations
+  * [`async_hooks`](https://nodejs.org/api/async_hooks.html) 
 
 ### `--env=<environment>`
 
@@ -215,13 +211,25 @@ Find and run the tests that cover a space separated list of source files that we
 
 ### `--forceExit`
 
-Force Jest to exit after all tests have completed running. This is useful when resources set up by test code cannot be adequately cleaned up.
+* == escape-hatch
+  * ❌NOT recommended to use❌
+    * Reason:🧠if | end of a test run, Jest doesn't exit ==
+      * external resources are STILL being held on to, OR
+      * timers are STILL pending in your code🧠
 
-:::caution
+* | AFTER ALL tests have completed running,
+  * 👀force Jest to exit👀 
 
-This feature is an escape-hatch. If Jest doesn't exit at the end of a test run, it means external resources are still being held on to or timers are still pending in your code. It is advised to tear down external resources after each test to make sure Jest can shut down cleanly. You can use `--detectOpenHandles` to help track it down.
+* use cases
+  * resources / set up by test code,
+    * can NOT be adequately cleaned up
 
-:::
+* recommendations
+  * use + `--detectOpenHandles`
+    * Reason:🧠help track external resources down🧠
+  * | AFTER EACH test,
+    * tear down external resources
+      * Reason:🧠Jest can shut down cleanly🧠
 
 ### `--help`
 
@@ -347,11 +355,21 @@ A list of paths to directories that Jest should use to search for files in.
 
 ### `--runInBand`
 
-Alias: `-i`. Run all tests serially in the current process, rather than creating a worker pool of child processes that run tests. This can be useful for debugging.
+* alias
+  * `-i`
+* allows
+  * | CURRENT process,
+    * run ALL tests ⚠️SERIALLY⚠️
+      * != create a worker pool of child processes / run tests
+* use cases
+  * debugging
 
 ### `--runTestsByPath`
 
-Run only the tests that were specified with their exact paths. This avoids converting them into a regular expression and matching it against every single file.
+* run only the tests that were specified with their exact paths
+* avoids
+  * converting them into a regular expression
+  * matching it against every single file.
 
 For example, given the following file structure:
 
@@ -387,13 +405,15 @@ PASS __tests__/t1.test.js
 
 :::tip
 
-The default regex matching works fine on small runs, but becomes slow if provided with multiple patterns and/or against a lot of tests. This option replaces the regex matching logic and by that optimizes the time it takes Jest to filter specific test files.
+The default regex matching works fine on small runs, but becomes slow if provided with multiple patterns and/or against a lot of tests
+* This option replaces the regex matching logic and by that optimizes the time it takes Jest to filter specific test files.
 
 :::
 
 ### `--seed=<num>`
 
-Sets a seed value that can be retrieved in a test file via [`jest.getSeed()`](JestObjectAPI.md#jestgetseed). The seed value must be between `-0x80000000` and `0x7fffffff` inclusive (`-2147483648` (`-(2 ** 31)`) and `2147483647` (`2 ** 31 - 1`) in decimal).
+Sets a seed value that can be retrieved in a test file via [`jest.getSeed()`](JestObjectAPI.md#jestgetseed)
+* The seed value must be between `-0x80000000` and `0x7fffffff` inclusive (`-2147483648` (`-(2 ** 31)`) and `2147483647` (`2 ** 31 - 1`) in decimal).
 
 ```bash
 jest --seed=1324
