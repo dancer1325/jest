@@ -1056,83 +1056,47 @@ Default: `'prettier'`
 
 Sets the path to the [`prettier`](https://prettier.io/) node module used to update inline snapshots.
 
-### `projects` \[array&lt;string | ProjectConfig&gt;]
+### `projects [string | ProjectConfig]` 
 
-Default: `undefined`
+* by default, `undefined`
+* allows
+  * 💡run tests | ALL specified projects | SAME time💡
 
-When the `projects` configuration is provided with an array of paths or glob patterns, Jest will run tests in all of the specified projects at the same time. This is great for monorepos or when working on multiple projects at the same time.
+    ```js, title=jest.config.js
+    /** @type {import('jest').Config} */
+    const config = {
+      projects: ['<rootDir>', '<rootDir>/examples/*'],
+    };
+    
+    module.exports = config;
+    ```
 
-```js tab
-/** @type {import('jest').Config} */
-const config = {
-  projects: ['<rootDir>', '<rootDir>/examples/*'],
-};
+  * run MULTIPLE configurations OR multiple [runners](#runner-string)
 
-module.exports = config;
-```
+    ```js, title=jest.config.js
+    /** @type {import('jest').Config} */
+    const config = {
+      projects: [
+        {
+          displayName: 'test',
+        },
+        {
+          displayName: 'lint',
+          runner: 'jest-runner-eslint',
+          testMatch: ['<rootDir>/**/*.js'],
+        },
+      ],
+    };
 
-```ts tab
-import type {Config} from 'jest';
+    module.exports = config;
+    ```
+    * recommendations
+      * if you use multi-project runner -> add `displayName` / EACH project
+        * displayed | its tests
 
-const config: Config = {
-  projects: ['<rootDir>', '<rootDir>/examples/*'],
-};
-
-export default config;
-```
-
-This example configuration will run Jest in the root directory as well as in every folder in the examples directory. You can have an unlimited amount of projects running in the same Jest instance.
-
-The projects feature can also be used to run multiple configurations or multiple [runners](#runner-string). For this purpose, you can pass an array of configuration objects. For example, to run both tests and ESLint (via [jest-runner-eslint](https://github.com/jest-community/jest-runner-eslint)) in the same invocation of Jest:
-
-```js tab
-/** @type {import('jest').Config} */
-const config = {
-  projects: [
-    {
-      displayName: 'test',
-    },
-    {
-      displayName: 'lint',
-      runner: 'jest-runner-eslint',
-      testMatch: ['<rootDir>/**/*.js'],
-    },
-  ],
-};
-
-module.exports = config;
-```
-
-```ts tab
-import type {Config} from 'jest';
-
-const config: Config = {
-  projects: [
-    {
-      displayName: 'test',
-    },
-    {
-      displayName: 'lint',
-      runner: 'jest-runner-eslint',
-      testMatch: ['<rootDir>/**/*.js'],
-    },
-  ],
-};
-
-export default config;
-```
-
-:::tip
-
-When using multi-project runner, it's recommended to add a `displayName` for each project. This will show the `displayName` of a project next to its tests.
-
-:::
-
-:::note
-
-With the `projects` option enabled, Jest will copy the root-level configuration options to each individual child configuration during the test run, resolving its values in the child's context. This means that string tokens like `<rootDir>` will point to the _child's root directory_ even if they are defined in the root-level configuration.
-
-:::
+* use cases
+  * monorepos
+  * work | MULTIPLE projects | SAME time
 
 ### `randomize` \[boolean]
 
@@ -2118,9 +2082,12 @@ export default config;
 
 ### `testTimeout` \[number]
 
-Default: `5000`
-
-Default timeout of a test in milliseconds.
+* by default, `5000`
+* 's units
+  * milliseconds
+* uses
+  * test's default timeout 
+    * == if tests take > `testTimeout` -> fail
 
 ### `transform` \[object&lt;string, pathToTransformer | \[pathToTransformer, object]&gt;]
 
