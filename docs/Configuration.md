@@ -996,59 +996,20 @@ Default: `1000`
 
 Print a warning indicating that there are probable open handles if Jest does not exit cleanly this number of milliseconds after it completes. Use `0` to disable the warning.
 
-### `preset` \[string]
+### `preset [string]`
 
-Default: `undefined`
+* by default,
+  * `undefined`
 
-A preset that is used as a base for Jest's configuration. A preset should point to an npm module that has a `jest-preset.json`, `jest-preset.js`, `jest-preset.cjs` or `jest-preset.mjs` file at the root.
-
-For example, this preset `foo-bar/jest-preset.js` will be configured as follows:
-
-```js tab
-/** @type {import('jest').Config} */
-const config = {
-  preset: 'foo-bar',
-};
-
-module.exports = config;
-```
-
-```ts tab
-import type {Config} from 'jest';
-
-const config: Config = {
-  preset: 'foo-bar',
-};
-
-export default config;
-```
-
-Presets may also be relative to filesystem paths:
-
-```js tab
-/** @type {import('jest').Config} */
-const config = {
-  preset: './node_modules/foo-bar/jest-preset.js',
-};
-
-module.exports = config;
-```
-
-```ts tab
-import type {Config} from 'jest';
-
-const config: Config = {
-  preset: './node_modules/foo-bar/jest-preset.js',
-};
-
-export default config;
-```
-
-:::info
-
-If you also have specified [`rootDir`](#rootdir-string), the resolution of this file will be relative to that root directory.
-
-:::
+* preset
+  * uses
+    * base -- for -- Jest's configuration
+  * 's input
+    * `string`
+      * ALLOWED values
+        * npm module / ⚠️has a `jest-preset.json`, `jest-preset.js`, `jest-preset.cjs` or `jest-preset.mjs` | root⚠️
+        * relative filesystem paths
+          * if you ALSO have specified [`rootDir`](#rootdir-string) -> resolution is relative to this
 
 ### `prettierPath` \[string]
 
