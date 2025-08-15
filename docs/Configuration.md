@@ -684,7 +684,7 @@ If you specify a global reference value (like an object or array) here, and some
 
 Default: `undefined`
 
-This option allows the use of a custom global setup module, which must export a function (it can be sync or async). The function will be triggered once before all test suites and it will receive two arguments: Jest's [`globalConfig`](https://github.com/jestjs/jest/blob/v29.2.1/packages/jest-types/src/Config.ts#L358-L422) and [`projectConfig`](https://github.com/jestjs/jest/blob/v29.2.1/packages/jest-types/src/Config.ts#L424-L481).
+This option allows the use of a custom global setup module, which must export a function (it can be sync or async). The function will be triggered once before all test suites and it will receive two arguments: Jest's [`globalConfig`](https://github.com/jestjs/jest/blob/v29.2.1/packages/jest-types/src/Config.ts#L358-L422) and [`projectConfig`](/packages/jest-types/src/Config.ts)
 
 :::info
 
@@ -719,7 +719,7 @@ module.exports = async function (globalConfig, projectConfig) {
 
 Default: `undefined`
 
-This option allows the use of a custom global teardown module which must export a function (it can be sync or async). The function will be triggered once after all test suites and it will receive two arguments: Jest's [`globalConfig`](https://github.com/jestjs/jest/blob/v29.2.1/packages/jest-types/src/Config.ts#L358-L422) and [`projectConfig`](https://github.com/jestjs/jest/blob/v29.2.1/packages/jest-types/src/Config.ts#L424-L481).
+This option allows the use of a custom global teardown module which must export a function (it can be sync or async). The function will be triggered once after all test suites and it will receive two arguments: Jest's [`globalConfig`](https://github.com/jestjs/jest/blob/v29.2.1/packages/jest-types/src/Config.ts#L358-L422) and [`projectConfig`](../packages/jest-types/src/Config.ts)
 
 :::info
 
@@ -1093,6 +1093,12 @@ Sets the path to the [`prettier`](https://prettier.io/) node module used to upda
     * recommendations
       * if you use multi-project runner -> add `displayName` / EACH project
         * displayed | its tests
+
+* 's input
+  * `[string | ProjectConfig]`
+    * `string`  
+      * == path -- to -- 1 jest config file
+    * `ProjectConfig`
 
 * use cases
   * monorepos
