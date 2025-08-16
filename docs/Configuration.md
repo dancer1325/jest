@@ -224,116 +224,36 @@ export default config;
 
 For more information about the options object shape refer to `CoverageReporterWithOptions` type in the [type definitions](https://github.com/jestjs/jest/tree/main/packages/jest-types/src/Config.ts).
 
-### `coverageThreshold` \[object]
+### `coverageThreshold object`
 
-Default: `undefined`
+* by default,
+  * `undefined`
 
-This will be used to configure minimum threshold enforcement for coverage results. Thresholds can be specified as `global`, as a [glob](https://github.com/isaacs/node-glob#glob-primer), and as a directory or file path. If thresholds aren't met, jest will fail. Thresholds specified as a positive number are taken to be the minimum percentage required. Thresholds specified as a negative number represent the maximum number of uncovered entities allowed.
+* allows
+  * | coverage results,
+    * 👀configuring minimum threshold enforcement👀 
+      * ⚠️if thresholds are NOT met -> jest will fail⚠️
+      * if it's specified as a
+        * positive number == minimum percentage required
+        * negative number == maximum number of uncovered entities allowed
 
-For example, with the following configuration jest will fail if there is less than 80% branch, line, and function coverage, or if there are more than 10 uncovered statements:
+* ways to configure
+  * `global: CoverageThresholdValue`
+    * ⚠️if you configure ALSO `glob` & directory -> calculate the threshold | REST of files⚠️
+  * `[glob | path: string]: CoverageThresholdValue`
+    * [glob](https://github.com/isaacs/node-glob#glob-primer)
+      * == ALL files / match the glob
+    * if NOTHING is found -> returns an error
 
-```js tab
-/** @type {import('jest').Config} */
-const config = {
-  coverageThreshold: {
-    global: {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: -10,
-    },
-  },
-};
-
-module.exports = config;
-```
-
-```ts tab
-import type {Config} from 'jest';
-
-const config: Config = {
-  coverageThreshold: {
-    global: {
-      branches: 80,
-      functions: 80,
-      lines: 80,
-      statements: -10,
-    },
-  },
-};
-
-export default config;
-```
-
-If globs or paths are specified alongside `global`, coverage data for matching paths will be subtracted from overall coverage and thresholds will be applied independently. Thresholds for globs are applied to all files matching the glob. If the file specified by path is not found, an error is returned.
-
-For example, with the following configuration:
-
-```js tab
-/** @type {import('jest').Config} */
-const config = {
-  coverageThreshold: {
-    global: {
-      branches: 50,
-      functions: 50,
-      lines: 50,
-      statements: 50,
-    },
-    './src/components/': {
-      branches: 40,
-      statements: 40,
-    },
-    './src/reducers/**/*.js': {
-      statements: 90,
-    },
-    './src/api/very-important-module.js': {
-      branches: 100,
-      functions: 100,
-      lines: 100,
-      statements: 100,
-    },
-  },
-};
-
-module.exports = config;
-```
-
-```ts tab
-import type {Config} from 'jest';
-
-const config: Config = {
-  coverageThreshold: {
-    global: {
-      branches: 50,
-      functions: 50,
-      lines: 50,
-      statements: 50,
-    },
-    './src/components/': {
-      branches: 40,
-      statements: 40,
-    },
-    './src/reducers/**/*.js': {
-      statements: 90,
-    },
-    './src/api/very-important-module.js': {
-      branches: 100,
-      functions: 100,
-      lines: 100,
-      statements: 100,
-    },
-  },
-};
-
-export default config;
-```
-
-Jest will fail if:
-
-- The `./src/components` directory has less than 40% branch or statement coverage.
-- One of the files matching the `./src/reducers/**/*.js` glob has less than 90% statement coverage.
-- The `./src/api/very-important-module.js` file has less than 100% coverage.
-- Every remaining file combined has less than 50% coverage (`global`).
+* `CoverageThresholdValue`
+  * `branches`
+    * == conditional branches (if/else, switch, ...)
+  * `functions`
+    * == functions were invoked >= 1 time
+  * `lines`
+    * == lines / were executed
+  * `statements`
+    * == declarations / were executed
 
 ### `dependencyExtractor` \[string]
 
