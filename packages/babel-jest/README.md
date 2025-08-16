@@ -1,22 +1,23 @@
 # babel-jest
 
-[Babel](https://github.com/babel/babel) [jest](https://github.com/jestjs/jest) plugin
+* == [Babel](https://github.com/babel/babel) [jest](https://github.com/jestjs/jest) plugin
+  * 💡JS code is AUTOMATICALLY compiled -- via -- Babel💡
 
 ## Usage
-
-If you are already using `jest-cli`, add `babel-jest` and it will automatically compile JavaScript code using Babel.
 
 ```bash
 yarn add --dev babel-jest @babel/core
 ```
 
-If you would like to write your own preprocessor, uninstall and delete babel-jest and set the [config.transform](https://jestjs.io/docs/configuration#transform-object-string-string) option to your preprocessor.
+* if you want to write your OWN preprocessor
+  * `yarn remove --dev babel-jest`
+  * | your preprocessor,
+    * set [config.transform](https://jestjs.io/docs/configuration#transform-object-string-string) 
 
-## Setup
+## | add code preprocessors, setup
 
-_Note: this step is only required if you are using `babel-jest` with additional code preprocessors._
-
-To explicitly define `babel-jest` as a transformer for your JavaScript code, map _.js_ files to the `babel-jest` module. Typescript files are also supported.
+* TODO: To explicitly define `babel-jest` as a transformer for your JavaScript code, map _.js_ files to the `babel-jest` module
+* Typescript files are also supported.
 
 By default, it loads your existing Babel configuration (if any)
 
@@ -33,3 +34,5 @@ You can also pass further [babel options](https://babeljs.io/docs/options)
   "\\.[jt]sx?$": ["babel-jest", { "extends": "./babel.config.js", "plugins": ["babel-plugin-transform-import-meta"] }]
 },
 ```
+
+inject the Babel plugin necessary for mock hoisting talked about in [ES Module mocking](ManualMocks.md#using-with-es-module-imports)
