@@ -1898,48 +1898,30 @@ export default config;
   * test's default timeout 
     * == if tests take > `testTimeout` -> fail
 
-### `transform` \[object&lt;string, pathToTransformer | \[pathToTransformer, object]&gt;]
+### `transform object<string, pathToTransformer | [pathToTransformer, object]>`
 
-Default: `{"\\.[jt]sx?$": "babel-jest"}`
+* by default,
+  * `{"\\.[jt]sx?$": "babel-jest"}`
 
-A map from regular expressions to paths to transformers. Optionally, a tuple with configuration options can be passed as second argument: `{filePattern: ['path-to-transformer', {options}]}`. For example, here is how you can configure `babel-jest` for non-default behavior: `{'\\.js$': ['babel-jest', {rootMode: 'upward'}]}`.
+* == map / 
+  * 's key
+    * `string`
+      * regular expressions
+  * 's value
+    * ALLOWED values
+      * `pathToTransformer`
+      * `[pathToTransformer, object]`
 
-Jest runs the code of your project as JavaScript, hence a transformer is needed if you use some syntax not supported by Node out of the box (such as JSX, TypeScript, Vue templates). By default, Jest will use [`babel-jest`](https://github.com/jestjs/jest/tree/main/packages/babel-jest#setup) transformer, which will load your project's Babel configuration and transform any file matching the `/\.[jt]sx?$/` RegExp (in other words, any `.js`, `.jsx`, `.ts` or `.tsx` file). In addition, `babel-jest` will inject the Babel plugin necessary for mock hoisting talked about in [ES Module mocking](ManualMocks.md#using-with-es-module-imports).
+* use cases
+  * 👀Jest + syntax / NOT supported by Node (_Example:_ JSX, TypeScript, Vue templates) 👀
+    * Reason:🧠Jest runs the code of your project -- as -- JavaScript🧠
+    * by default,
+      * use [`babel-jest` transformer](https://github.com/jestjs/jest/tree/main/packages/babel-jest#setup)
 
-See the [Code Transformation](CodeTransformation.md) section for more details and instructions on building your own transformer.
+* how does it work?
+  * if file does NOT change -> runs 1! / file
 
-:::tip
-
-Keep in mind that a transformer only runs once per file unless the file has changed.
-
-Remember to include the default `babel-jest` transformer explicitly, if you wish to use it alongside with additional code preprocessors:
-
-```js tab
-/** @type {import('jest').Config} */
-const config = {
-  transform: {
-    '\\.[jt]sx?$': 'babel-jest',
-    '\\.css$': 'some-css-transformer',
-  },
-};
-
-module.exports = config;
-```
-
-```ts tab
-import type {Config} from 'jest';
-
-const config: Config = {
-  transform: {
-    '\\.[jt]sx?$': 'babel-jest',
-    '\\.css$': 'some-css-transformer',
-  },
-};
-
-export default config;
-```
-
-:::
+* see [Code Transformation](CodeTransformation.md)
 
 ### `transformIgnorePatterns` \[array&lt;string&gt;]
 
