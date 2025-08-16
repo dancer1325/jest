@@ -848,62 +848,34 @@ An array of file extensions your modules use. If you require modules without spe
 
 We recommend placing the extensions most commonly used in your project on the left, so if you are using TypeScript, you may want to consider moving "ts" and/or "tsx" to the beginning of the array.
 
-### `moduleNameMapper` \[object&lt;string, string | array&lt;string>&gt;]
+### `moduleNameMapper: object<string, string | [string]>` 
 
-Default: `null`
+* by default,
+  * `null`
+* == map /
+  * 's key
+    * `string`
+      * == module names' regular expressions 
+        * if you do NOT set boundaries (_Example:_ `^$`) -> hard to spot errors
+    * ⚠️order matters⚠️
+      * Reason:🧠patterns are checked from top -- to -- bottom🧠
+      * -> list FIRST, the MOST specific rule
+  * 's value
+    * `string | [string]`
+      * modules' alternative routes
+* allow
+  * stub out resources (_Example:_ images or styles) -- with -- 1! module
 
-A map from regular expressions to module names or to arrays of module names that allow to stub out resources, like images or styles with a single module.
+* modules / mapped to an alias
+  * by default,
+    * are unmocked
 
-Modules that are mapped to an alias are unmocked by default, regardless of whether automocking is enabled or not.
-
-Use `<rootDir>` string token to refer to [`rootDir`](#rootdir-string) value if you want to use file paths.
-
-Additionally, you can substitute captured regex groups using numbered backreferences.
-
-```js tab
-/** @type {import('jest').Config} */
-const config = {
-  moduleNameMapper: {
-    '^image![a-zA-Z0-9$_-]+$': 'GlobalImageStub',
-    '^[./a-zA-Z0-9$_-]+\\.png$': '<rootDir>/RelativeImageStub.js',
-    'module_name_(.*)': '<rootDir>/substituted_module_$1.js',
-    'assets/(.*)': [
-      '<rootDir>/images/$1',
-      '<rootDir>/photos/$1',
-      '<rootDir>/recipes/$1',
-    ],
-  },
-};
-
-module.exports = config;
-```
-
-```ts tab
-import type {Config} from 'jest';
-
-const config: Config = {
-  moduleNameMapper: {
-    '^image![a-zA-Z0-9$_-]+$': 'GlobalImageStub',
-    '^[./a-zA-Z0-9$_-]+\\.png$': '<rootDir>/RelativeImageStub.js',
-    'module_name_(.*)': '<rootDir>/substituted_module_$1.js',
-    'assets/(.*)': [
-      '<rootDir>/images/$1',
-      '<rootDir>/photos/$1',
-      '<rootDir>/recipes/$1',
-    ],
-  },
-};
-
-export default config;
-```
-
-The order in which the mappings are defined matters. Patterns are checked one by one until one fits. The most specific rule should be listed first. This is true for arrays of module names as well.
-
-:::info
-
-If you provide module names without boundaries `^$` it may cause hard to spot errors. E.g. `relay` will replace all modules which contain `relay` as a substring in its name: `relay`, `react-relay` and `graphql-relay` will all be pointed to your stub.
-
-:::
+* `<rootDir>: string`
+  * == [`rootDir`](#rootdir-string) value
+  * allows
+    * substitute captured regex groups -- by -- numbered backreferences 
+  * uses
+    * | file paths
 
 ### `modulePathIgnorePatterns` \[array&lt;string&gt;]
 
