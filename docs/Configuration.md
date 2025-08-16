@@ -299,57 +299,27 @@ The `extract` function should return an iterable (`Array`, `Set`, etc.) with the
 
 That module can also contain a `getCacheKey` function to generate a cache key to determine if the logic has changed and any cached artifacts relying on it should be discarded.
 
-### `displayName` \[string, object]
+### `displayName: string | object`
 
-default: `undefined`
+* by default,
+  * `undefined`
 
-Allows for a label to be printed alongside a test while it is running. This becomes more useful in multi-project repositories where there can be many jest configuration files. This visually tells which project a test belongs to.
+* allows
+  * | run a test,
+    * print a label / test
 
-```js tab
-/** @type {import('jest').Config} */
-const config = {
-  displayName: 'CLIENT',
-};
+* uses
+  * multi-project repositories / EXIST MANY jest configuration files
 
-module.exports = config;
-```
-
-```ts tab
-import type {Config} from 'jest';
-
-const config: Config = {
-  displayName: 'CLIENT',
-};
-
-export default config;
-```
-
-Alternatively, an object with the properties `name` and `color` can be passed. This allows for a custom configuration of the background color of the displayName. `displayName` defaults to white when its value is a string. Jest uses [`chalk`](https://github.com/chalk/chalk) to provide the color. As such, all of the valid options for colors supported by `chalk` are also supported by Jest.
-
-```js tab
-/** @type {import('jest').Config} */
-const config = {
-  displayName: {
-    name: 'CLIENT',
-    color: 'blue',
-  },
-};
-
-module.exports = config;
-```
-
-```ts tab
-import type {Config} from 'jest';
-
-const config: Config = {
-  displayName: {
-    name: 'CLIENT',
-    color: 'blue',
-  },
-};
-
-export default config;
-```
+* ALLOWED values
+  * `string`
+    * == display name
+  * `object`
+    * `name: string`
+    * `color: string`
+      * == background color | displayName
+        * -- based on -- [`chalk`](https://github.com/chalk/chalk)
+      * by default, white
 
 ### `errorOnDeprecated` \[boolean]
 
