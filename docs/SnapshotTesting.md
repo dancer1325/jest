@@ -1,110 +1,67 @@
----
-id: snapshot-testing
-title: Snapshot Testing
----
+* Snapshot tests
+  * use cases
+    * tool / interface does NOT change UNEXPECTEDLY
+      * == -- related to -- data rendered
+      * _Example of interface:_ API response, UI, logs, or error messages
+  * 👀how does it work?👀
+    * renders a UI component,
+    * takes a snapshot,
+    * this snapshot is compared vs reference snapshot / stored | test
+      * if 2 snapshots 
+        * match -> test will pass
+        * do NOT match -> test will fail
+          * Reasons to NOT match:🧠
+            * change is unexpected
+            * UI component's NEW version -> reference snapshot needs to be updated🧠
 
-Snapshot tests are a very useful tool whenever you want to make sure your UI does not change unexpectedly.
-
-A typical snapshot test case renders a UI component, takes a snapshot, then compares it to a reference snapshot file stored alongside the test. The test will fail if the two snapshots do not match: either the change is unexpected, or the reference snapshot needs to be updated to the new version of the UI component.
+* Snapshot files
+  * | run FIRSTLY this tests,
+    * 👀they are created👀
+  * recommendations
+    * 👀commit & review👀
+  * | code review,
+    * are made -- , via [pretty-format](/packages/pretty-format), -- human-readable
 
 ## Snapshot Testing with Jest
 
-A similar approach can be taken when it comes to testing your React components. Instead of rendering the graphical UI, which would require building the entire app, you can use a test renderer to quickly generate a serializable value for your React tree. Consider this [example test](https://github.com/jestjs/jest/blob/main/examples/snapshot/__tests__/link.test.js) for a [Link component](https://github.com/jestjs/jest/blob/main/examples/snapshot/Link.js):
+* test renderer
+  * 👀QUICKLY generate a serializable value -- for -- your React tree👀
+  * ⚠️ALTERNATIVE to⚠️
+    * render the graphical UI
+      * == build the entire app 
 
-```tsx
-import renderer from 'react-test-renderer';
-import Link from '../Link';
+* _Example:_ [here](/examples/snapshot)
 
-it('renders correctly', () => {
-  const tree = renderer
-    .create(<Link page="http://www.facebook.com">Facebook</Link>)
-    .toJSON();
-  expect(tree).toMatchSnapshot();
-});
-```
-
-The first time this test is run, Jest creates a [snapshot file](https://github.com/jestjs/jest/blob/main/examples/snapshot/__tests__/__snapshots__/link.test.js.snap) that looks like this:
-
-```javascript
-exports[`renders correctly 1`] = `
-<a
-  className="normal"
-  href="http://www.facebook.com"
-  onMouseEnter={[Function]}
-  onMouseLeave={[Function]}
->
-  Facebook
-</a>
-`;
-```
-
-The snapshot artifact should be committed alongside code changes, and reviewed as part of your code review process. Jest uses [pretty-format](https://github.com/jestjs/jest/tree/main/packages/pretty-format) to make snapshots human-readable during code review. On subsequent test runs, Jest will compare the rendered output with the previous snapshot. If they match, the test will pass. If they don't match, either the test runner found a bug in your code (in the `<Link>` component in this case) that should be fixed, or the implementation has changed and the snapshot needs to be updated.
-
-:::note
-
-The snapshot is directly scoped to the data you render – in our example the `<Link>` component with `page` prop passed to it. This implies that even if any other file has missing props (say, `App.js`) in the `<Link>` component, it will still pass the test as the test doesn't know the usage of `<Link>` component and it's scoped only to the `Link.js`. Also, rendering the same component with different props in other snapshot tests will not affect the first one, as the tests don't know about each other.
-
-:::
-
-:::info
-
-More information on how snapshot testing works and why we built it can be found on the [release blog post](/blog/2016/07/27/jest-14). We recommend reading [this blog post](http://benmccormick.org/2016/09/19/testing-with-jest-snapshots-first-impressions/) to get a good sense of when you should use snapshot testing. We also recommend watching this [egghead video](https://egghead.io/lessons/javascript-use-jest-s-snapshot-testing-feature?pl=testing-javascript-with-jest-a36c4074) on Snapshot Testing with Jest.
-
-:::
+* see
+  * [release blog post](/website/blog/2016-07-27-jest-14.md)
+  * [blog post](http://benmccormick.org/2016/09/19/testing-with-jest-snapshots-first-impressions/)
+  * [egghead video](https://egghead.io/lessons/javascript-use-jest-s-snapshot-testing-feature?pl=testing-javascript-with-jest-a36c4074)
 
 ### Updating Snapshots
 
-It's straightforward to spot when a snapshot test fails after a bug has been introduced. When that happens, go ahead and fix the issue and make sure your snapshot tests are passing again. Now, let's talk about the case when a snapshot test is failing due to an intentional implementation change.
+* use case
+  * you modify the code -> tests fail 
 
-One such situation can arise if we intentionally change the address the Link component in our example is pointing to.
-
-```tsx
-// Updated test case with a Link to a different address
-it('renders correctly', () => {
-  const tree = renderer
-    .create(<Link page="http://www.instagram.com">Instagram</Link>)
-    .toJSON();
-  expect(tree).toMatchSnapshot();
-});
-```
-
-In that case, Jest will print this output:
-
-![](/img/content/failedSnapshotTest.png)
-
-Since we just updated our component to point to a different address, it's reasonable to expect changes in the snapshot for this component. Our snapshot test case is failing because the snapshot for our updated component no longer matches the snapshot artifact for this test case.
-
-To resolve this, we will need to update our snapshot artifacts. You can run Jest with a flag that will tell it to re-generate snapshots:
-
-```bash
-jest --updateSnapshot
-```
-
-Go ahead and accept the changes by running the above command. You may also use the equivalent single-character `-u` flag to re-generate snapshots if you prefer. This will re-generate snapshot artifacts for all failing snapshot tests. If we had any additional failing snapshot tests due to an unintentional bug, we would need to fix the bug before re-generating snapshots to avoid recording snapshots of the buggy behavior.
-
-If you'd like to limit which snapshot test cases get re-generated, you can pass an additional `--testNamePattern` flag to re-record snapshots only for those tests that match the pattern.
-
-You can try out this functionality by cloning the [snapshot example](https://github.com/jestjs/jest/tree/main/examples/snapshot), modifying the `Link` component, and running Jest.
+* `jest --updateSnapshot` or `jest -u` 
+  * re-generate snapshots
+  * `--testNamePattern`
+    * 👀limit the snapshot test cases / get re-generated👀 
 
 ### Interactive Snapshot Mode
 
-Failed snapshots can also be updated interactively in watch mode:
+* | watch mode,
+  * you can update interactively failed snapshots 
 
-![](/img/content/interactiveSnapshot.png)
+  ![](/website/static/img/content/interactiveSnapshot.png)
 
-Once you enter Interactive Snapshot Mode, Jest will step you through the failed snapshots one test at a time and give you the opportunity to review the failed output.
+  ![](/website/static/img/content/interactiveSnapshotUpdate.gif)
 
-From here you can choose to update that snapshot or skip to the next:
-
-![](/img/content/interactiveSnapshotUpdate.gif)
-
-Once you're finished, Jest will give you a summary before returning back to watch mode:
-
-![](/img/content/interactiveSnapshotDone.png)
+  ![](/website/static/img/content/interactiveSnapshotDone.png)
 
 ### Inline Snapshots
 
-Inline snapshots behave identically to external snapshots (`.snap` files), except the snapshot values are written automatically back into the source code. This means you can get the benefits of automatically generated snapshots without having to switch to an external file to make sure the correct value was written.
+Inline snapshots behave identically to external snapshots (`.snap` files), except the snapshot values are written automatically back into the source code
+* This means you can get the benefits of automatically generated snapshots without having to switch to an external file to make sure the correct value was written.
 
 Example:
 
@@ -236,11 +193,10 @@ Other ways this can be done is using the [snapshot serializer](Configuration.md#
 
 ## Best Practices
 
-Snapshots are a fantastic tool for identifying unexpected interface changes within your application – whether that interface is an API response, UI, logs, or error messages. As with any testing strategy, there are some best-practices you should be aware of, and guidelines you should follow, in order to use them effectively.
+### 1. Treat snapshots -- as -- code
 
-### 1. Treat snapshots as code
-
-Commit snapshots and review them as part of your regular code review process. This means treating snapshots as you would any other type of test or code in your project.
+* TODO: Commit snapshots and review them as part of your regular code review process
+* This means treating snapshots as you would any other type of test or code in your project.
 
 Ensure that your snapshots are readable by keeping them focused, short, and by using tools that enforce these stylistic conventions.
 
@@ -250,19 +206,25 @@ The goal is to make it easy to review snapshots in pull requests, and fight agai
 
 ### 2. Tests should be deterministic
 
-Your tests should be deterministic. Running the same tests multiple times on a component that has not changed should produce the same results every time. You're responsible for making sure your generated snapshots do not include platform specific or other non-deterministic data.
+Your tests should be deterministic
+* Running the same tests multiple times on a component that has not changed should produce the same results every time
+* You're responsible for making sure your generated snapshots do not include platform specific or other non-deterministic data.
 
-For example, if you have a [Clock](https://github.com/jestjs/jest/blob/main/examples/snapshot/Clock.js) component that uses `Date.now()`, the snapshot generated from this component will be different every time the test case is run. In this case we can [mock the Date.now() method](MockFunctions.md) to return a consistent value every time the test is run:
+For example, if you have a [Clock](https://github.com/jestjs/jest/blob/main/examples/snapshot/Clock.js) component that uses `Date.now()`, the snapshot generated from this component will be different every time the test case is run
+* In this case we can [mock the Date.now() method](MockFunctions.md) to return a consistent value every time the test is run:
 
 ```js
 Date.now = jest.fn(() => 1_482_363_367_071);
 ```
 
-Now, every time the snapshot test case runs, `Date.now()` will return `1482363367071` consistently. This will result in the same snapshot being generated for this component regardless of when the test is run.
+Now, every time the snapshot test case runs, `Date.now()` will return `1482363367071` consistently
+* This will result in the same snapshot being generated for this component regardless of when the test is run.
 
 ### 3. Use descriptive snapshot names
 
-Always strive to use descriptive test and/or snapshot names for snapshots. The best names describe the expected snapshot content. This makes it easier for reviewers to verify the snapshots during review, and for anyone to know whether or not an outdated snapshot is the correct behavior before updating.
+Always strive to use descriptive test and/or snapshot names for snapshots
+* The best names describe the expected snapshot content
+* This makes it easier for reviewers to verify the snapshots during review, and for anyone to know whether or not an outdated snapshot is the correct behavior before updating.
 
 For example, compare:
 

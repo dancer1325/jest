@@ -21,6 +21,7 @@ export default function Link({page, children}) {
   return (
     <a
       className={status}
+      // href={page || '##'}    -- check it does NOT match with snapshot
       href={page || '#'}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
