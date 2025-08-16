@@ -91,25 +91,26 @@ Default: `false`
 
 Automatically clear mock calls, instances, contexts and results before every test. Equivalent to calling [`jest.clearAllMocks()`](JestObjectAPI.md#jestclearallmocks) before each test. This does not remove any mock implementation that may have been provided.
 
-### `collectCoverage` \[boolean]
+### `collectCoverage boolean`
 
-Default: `false`
+* by default,
+  * `false`
 
-Indicates whether the coverage information should be collected while executing the test. Because this retrofits all executed files with coverage collection statements, it may significantly slow down your tests.
-
-Jest ships with two coverage providers: `babel` (default) and `v8`. See the [`coverageProvider`](#coverageprovider-string) option for more details.
-
-:::info
-
-The `babel` and `v8` coverage providers use `/* istanbul ignore next */` and `/* c8 ignore next */` comments to exclude lines from coverage reports, respectively. For more information, you can view the [`istanbuljs` documentation](https://github.com/istanbuljs/nyc#parsing-hints-ignoring-lines) and the [`c8` documentation](https://github.com/bcoe/c8#ignoring-uncovered-lines-functions-and-blocks).
-
-:::
+* == | execute the test,
+  * coverage information should be collected 
+* allows
+  * retrofitting ALL executed files -- with -- coverage collection statements
+    * -> slow down your tests
 
 ### `collectCoverageFrom` \[array]
 
+* requirements
+  * `collectCoverage: true`
+  
 Default: `undefined`
 
-An array of [glob patterns](https://github.com/micromatch/micromatch) indicating a set of files for which coverage information should be collected. If a file matches the specified glob pattern, coverage information will be collected for it even if no tests exist for this file and it's never required in the test suite.
+An array of [glob patterns](https://github.com/micromatch/micromatch) indicating a set of files for which coverage information should be collected
+* If a file matches the specified glob pattern, coverage information will be collected for it even if no tests exist for this file and it's never required in the test suite.
 
 ```js tab
 /** @type {import('jest').Config} */
@@ -142,7 +143,9 @@ This will collect coverage information for all the files inside the project's `r
 
 :::tip
 
-Each glob pattern is applied in the order they are specified in the config. For example `["!**/__tests__/**", "**/*.js"]` will not exclude `__tests__` because the negation is overwritten with the second pattern. In order to make the negated glob work in this example it has to come after `**/*.js`.
+Each glob pattern is applied in the order they are specified in the config
+* For example `["!**/__tests__/**", "**/*.js"]` will not exclude `__tests__` because the negation is overwritten with the second pattern
+* In order to make the negated glob work in this example it has to come after `**/*.js`.
 
 :::
 
@@ -167,64 +170,76 @@ Lines        : Unknown% ( 0/0 )
 Jest: Coverage data for global was not found.
 ```
 
-Most likely your glob patterns are not matching any files. Refer to the [micromatch](https://github.com/micromatch/micromatch) documentation to ensure your globs are compatible.
+Most likely your glob patterns are not matching any files
+* Refer to the [micromatch](https://github.com/micromatch/micromatch) documentation to ensure your globs are compatible.
 
 </details>
 
-### `coverageDirectory` \[string]
+### `coverageDirectory string`
 
-Default: `undefined`
+* requirements
+  * `collectCoverage: true`
 
-The directory where Jest should output its coverage files.
+* by default,
+  * "/coverage"
+
+* == directory | Jest should output its coverage files
+  * if it does NOT exist PREVIOUSLY -> creates it
 
 ### `coveragePathIgnorePatterns` \[array&lt;string&gt;]
 
+* requirements
+  * `collectCoverage: true`
+
 Default: `["/node_modules/"]`
 
-An array of regexp pattern strings that are matched against all file paths before executing the test. If the file path matches any of the patterns, coverage information will be skipped.
+An array of regexp pattern strings that are matched against all file paths before executing the test
+* If the file path matches any of the patterns, coverage information will be skipped.
 
-These pattern strings match against the full path. Use the `<rootDir>` string token to include the path to your project's root directory to prevent it from accidentally ignoring all of your files in different environments that may have different root directories. Example: `["<rootDir>/build/", "<rootDir>/node_modules/"]`.
+These pattern strings match against the full path
+* Use the `<rootDir>` string token to include the path to your project's root directory to prevent it from accidentally ignoring all of your files in different environments that may have different root directories
+* Example: `["<rootDir>/build/", "<rootDir>/node_modules/"]`.
 
-### `coverageProvider` \[string]
+### `coverageProvider string`
 
-Indicates which provider should be used to instrument code for coverage. Allowed values are `babel` (default) or `v8`.
+* requirements
+  * `collectCoverage: true`
 
-### `coverageReporters` \[array&lt;string | \[string, options]&gt;]
+* == provider / instrument code -- for -- coverage
+* ALLOWED values
+  * `babel`
+    * default
+    * if you want to exclude lines | coverage reports -> use [`istanbuljs` comments](https://github.com/istanbuljs/nyc#parsing-hints-ignoring-lines)
+      ```
+      /* istanbul ignore next */
+      ```
+  * `v8`
+    * if you want to exclude lines | coverage reports -> use [`c8` comments](https://github.com/bcoe/c8#ignoring-uncovered-lines-functions-and-blocks)
+      ```
+      /* c8 ignore next */
+      ```
 
-Default: `["clover", "json", "lcov", "text"]`
+### `coverageReporters [string | [string, CoverageReporterWithOptions]`
 
-A list of reporter names that Jest uses when writing coverage reports. Any [istanbul reporter](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) can be used.
+* requirements
+  * `collectCoverage: true`
 
-:::tip
+* by default,
+  * `["clover", "json", "lcov", "text"]`
 
-Setting this option overwrites the default values. Add `"text"` or `"text-summary"` to see a coverage summary in the console output.
+* uses
+  * | write coverage reports
 
-:::
-
-Additional options can be passed using the tuple form. For example, you may hide coverage report lines for all fully-covered files:
-
-```js tab
-/** @type {import('jest').Config} */
-const config = {
-  coverageReporters: ['clover', 'json', 'lcov', ['text', {skipFull: true}]],
-};
-
-module.exports = config;
-```
-
-```ts tab
-import type {Config} from 'jest';
-
-const config: Config = {
-  coverageReporters: ['clover', 'json', 'lcov', ['text', {skipFull: true}]],
-};
-
-export default config;
-```
-
-For more information about the options object shape refer to `CoverageReporterWithOptions` type in the [type definitions](https://github.com/jestjs/jest/tree/main/packages/jest-types/src/Config.ts).
+* ALLOWED values
+  * [istanbul reporter](https://github.com/istanbuljs/istanbuljs/tree/master/packages/istanbul-reports/lib) 
+    * `"text"` OR `"text-summary"`
+      * | console output, 
+        * display coverage summary
 
 ### `coverageThreshold object`
+
+* requirements
+  * `collectCoverage: true`
 
 * by default,
   * `undefined`
