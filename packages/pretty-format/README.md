@@ -1,9 +1,13 @@
 # pretty-format
 
-Stringify any JavaScript value.
+* allows
+  * | any JavaScript value,
+    * stringify 
 
-- Serialize built-in JavaScript types.
-- Serialize application-specific data types with built-in or user-defined plugins.
+* uses
+  * serialize 
+    * built-in JavaScript types
+    * application-specific data types + built-in or user-defined plugins
 
 ## Installation
 
@@ -11,64 +15,23 @@ Stringify any JavaScript value.
 $ yarn add pretty-format
 ```
 
-## Usage
+## how to use?
 
-```js
-const {format: prettyFormat} = require('pretty-format'); // CommonJS
-```
+* | CommonJS
+  ```js
+  const {format: prettyFormat} = require('pretty-format'); 
+  ```
+* | ES2015 modules
+  ```js
+  import {format as prettyFormat} from 'pretty-format'; 
+  ```
 
-```js
-import {format as prettyFormat} from 'pretty-format'; // ES2015 modules
-```
-
-```js
-const val = {object: {}};
-val.circularReference = val;
-val[Symbol('foo')] = 'foo';
-val.map = new Map([['prop', 'value']]);
-val.array = [-0, Infinity, NaN];
-
-console.log(prettyFormat(val));
-/*
-Object {
-  "array": Array [
-    -0,
-    Infinity,
-    NaN,
-  ],
-  "circularReference": [Circular],
-  "map": Map {
-    "prop" => "value",
-  },
-  "object": Object {},
-  Symbol(foo): "foo",
-}
-*/
-```
-
-## Usage with options
-
-```js
-function onClick() {}
-
-console.log(prettyFormat(onClick));
-/*
-[Function onClick]
-*/
-
-const options = {
-  printFunctionName: false,
-};
-console.log(prettyFormat(onClick, options));
-/*
-[Function]
-*/
-```
+### \+ options
 
 <!-- prettier-ignore -->
 | key                   | type             | default     | description                                                                             |
-| :-------------------- | :--------------- | :---------- | :-------------------------------------------------------------------------------------- |
-| `callToJSON`          | `boolean`        | `true`      | call `toJSON` method (if it exists) on objects                                          |
+| :-------------------- | :--------------- | :---------- |:----------------------------------------------------------------------------------------|
+| `callToJSON`          | `boolean`        | `true`      | if object's `toJSON` exist -> call it                                                   |
 | `compareKeys`         | `function\|null` | `undefined` | compare function used when sorting object keys, `null` can be used to skip over sorting |
 | `escapeRegex`         | `boolean`        | `false`     | escape special characters in regular expressions                                        |
 | `escapeString`        | `boolean`        | `true`      | escape special characters in strings                                                    |
@@ -79,7 +42,7 @@ console.log(prettyFormat(onClick, options));
 | `min`                 | `boolean`        | `false`     | minimize added space: no indentation nor line breaks                                    |
 | `plugins`             | `array`          | `[]`        | plugins to serialize application-specific data types                                    |
 | `printBasicPrototype` | `boolean`        | `false`     | print the prototype for plain objects and arrays                                        |
-| `printFunctionName`   | `boolean`        | `true`      | include or omit the name of a function                                                  |
+| `printFunctionName`   | `boolean`        | `true`      | include OR omit the functionName                                                        |
 | `theme`               | `object`         |             | colors to highlight syntax in terminal                                                  |
 
 Property values of `theme` are from [ansi-styles colors](https://github.com/chalk/ansi-styles#colors)
@@ -94,7 +57,7 @@ const DEFAULT_THEME = {
 };
 ```
 
-## Usage with plugins
+### \+ plugins
 
 The `pretty-format` package provides some built-in plugins, including:
 
@@ -140,7 +103,7 @@ const formatted2 = prettyFormat(renderer.create(element).toJSON(), {
 */
 ```
 
-## Usage in Jest
+### | Jest
 
 For snapshot tests, Jest uses `pretty-format` with options that include some of its built-in plugins. For this purpose, plugins are also known as **snapshot serializers**.
 
@@ -167,7 +130,8 @@ For **all** test files, you can specify modules in Jest configuration. They prec
 
 ## Writing plugins
 
-A plugin is a JavaScript object.
+* plugin 
+  * == JavaScript object
 
 If `options` has a `plugins` array: for the first plugin whose `test(val)` method returns a truthy value, then `prettyFormat(val, options)` returns the result from either:
 

@@ -1,0 +1,15 @@
+{
+  "name": "pretty-format",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "pretty-format": "^30.0.5"
+  }
+}
