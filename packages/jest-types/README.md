@@ -1,6 +1,10 @@
 # @jest/types
 
 * == Jest's packages shared types 
+  * `GlobalConfig`
+    * 1! / organization
+  * `ProjectConfig`
+    * can EXIST >1 / organization
   * ⚠️!= ⚠️ 
     * [Jest globals](../jest-globals)
     * [@types/jest](https://npmjs.com/package/@types/jest)
