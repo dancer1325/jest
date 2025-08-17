@@ -1,4 +1,4 @@
-let { promiseFine }  = require('./utils');
+const {promiseFine} = require('./utils');
 
 //  return a promise      == 2@ argument is a Promise
 test('promise function ', () => {

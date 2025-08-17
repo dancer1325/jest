@@ -1,4 +1,4 @@
-let { promiseFine, promiseThrowError } = require('./utils');
+const {promiseFine, promiseThrowError} = require('./utils');
 
 // | test's 2@ argument,      async   in front
 test('async & await - 1', async () => {

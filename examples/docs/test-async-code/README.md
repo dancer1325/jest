@@ -12,4 +12,4 @@
   * `npm run test` / `yarn test`
 * Install jest globally
   * `npm install jest --global` / `yarn global add jest`
-  * `jest test`
+  * `jest`

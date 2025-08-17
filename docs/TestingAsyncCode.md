@@ -5,8 +5,11 @@ title: Testing Asynchronous Code
 
 * goal
   * Jest -- is notified that –- async code has been completed
+    * Jest tests complete
+      * ⚠️by default, | reach end of execution⚠️
+      * if you handle it -> use [`done`](#callbacks)
     * Reason: 🧠move on -- to -- ANOTHER test 🧠
-    * ways
+    * 💡ways to test an async code💡
       * [Promises](#promises)
       * [Async/Await](#asyncawait)
       * [Callbacks](#callbacks)
@@ -37,64 +40,23 @@ title: Testing Asynchronous Code
 
 ## Callbacks
 
-* TODO:
-For example, let's say that `fetchData`, instead of returning a promise, expects a callback, i.e. fetches some data and calls `callback(null, data)` when it is complete. 
-You want to test that this returned data is the string `'peanut butter'`.
-
-By default, Jest tests complete once they reach the end of their execution.
-That means this test will _not_ work as intended:
-
-```js
-// Don't do this!
-test('the data is peanut butter', () => {
-  function callback(error, data) {
-    if (error) {
-      throw error;
+*
+  ```
+  test('testName', done => {
+    function callback(...) {
+      ...
+      expect(...);
     }
-    expect(data).toBe('peanut butter');
-  }
-
-  fetchData(callback);
-});
-```
-
-The problem is that the test will complete as soon as `fetchData` completes, before ever calling the callback.
-
-There is an alternate form of `test` that fixes this. 
-Instead of putting the test in a function with an empty argument, use a single argument called `done`. 
-Jest will wait until the `done` callback is called before finishing the test.
-
-```js
-test('the data is peanut butter', done => {
-  function callback(error, data) {
-    if (error) {
-      done(error);
-      return;
-    }
-    try {
-      expect(data).toBe('peanut butter');
-      done();
-    } catch (error) {
-      done(error);
-    }
-  }
-
-  fetchData(callback);
-});
-```
-
-If `done()` is never called, the test will fail (with timeout error), which is what you want to happen.
-
-If the `expect` statement fails, it throws an error and `done()` is not called. 
-If we want to see in the test log why it failed, we have to wrap `expect` in a `try` block and pass the error in the `catch` block to `done`. 
-Otherwise, we end up with an opaque timeout error that doesn't show what value was received by `expect(data)`.
-
-:::caution
-
-Jest will throw an error, if the same test function is passed a `done()` callback and returns a promise.
-This is done as a precaution to avoid memory leaks in your tests.
-
-:::
+    someFunction(callback);
+  });
+  ```
+  * 's done
+    * == callback /
+      * | call `done()` -> Jest finishes the test
+      * ⚠️if `done()` is NEVER called -> test will fail (timeout error)⚠️
+    * recommendations
+      * wrap `done()` | `try-catch`
+      * `done(error)` | `catch(error)`
 
 ## `.resolves` / `.rejects`
 

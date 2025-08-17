@@ -1,4 +1,4 @@
-let { promiseFine, promiseThrowError } = require('./utils');
+const {promiseFine, promiseThrowError} = require('./utils');
 
 test('`resolves` - promiseFine', () => {
   return expect(promiseFine()).resolves.toBe('promiseFine async');

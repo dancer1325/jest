@@ -7,7 +7,14 @@ const promiseThrowError = () => {
   return Promise.reject('promiseThrowError async');
 };
 
+const fetchData = function (callback) {
+  setTimeout(() => {
+    callback(null, 'peanut butter');
+  }, 3000);
+};
+
 module.exports = {
+  fetchData,
   promiseFine,
-  promiseThrowError
+  promiseThrowError,
 };
