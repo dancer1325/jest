@@ -1,0 +1,17 @@
+{
+  "name": "jestbuiltin",
+  "version": "1.0.0",
+  "main": "sum.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@jest/globals": "^30.0.5",
+    "jest": "^30.0.5",
+    "typescript": "^5.0.0"
+  }
+}

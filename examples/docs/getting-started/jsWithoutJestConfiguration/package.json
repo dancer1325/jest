@@ -1,0 +1,15 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "* `npm init` & enter 'example-getting-started' as project name * `npm install --save-dev jest` / `yarn add --dev jest` / `pnpm add --save-dev jest`   * add jest as DevDependency * `npm init jest` / `yarn create jest` / `pnpm create jest`   * 👀generate a basic 'jest.config' file 👀",
+  "main": "sum.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^30.0.5"
+  }
+}

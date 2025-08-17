@@ -3,9 +3,8 @@
  * https://jestjs.io/docs/configuration
  */
 
-import type {Config} from 'jest';
-
-const config: Config = {
+/** @type {import('jest').Config} */
+const config = {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -13,10 +12,10 @@ const config: Config = {
   // bail: 0,
 
   // The directory where Jest should store its cached dependency information
-  // cacheDirectory: "/private/var/folders/_j/q942blh13rq8hg1v7bc391q40000gn/T/jest_dx",
+  // cacheDirectory: "/private/var/folders/10/70j9wdhj0nvg8brm4f3ycyb80000gp/T/jest_dy",
 
   // Automatically clear mock calls, instances, contexts and results before every test
-  clearMocks: true,
+  // clearMocks: false,
 
   // Indicates whether the coverage information should be collected while executing the test
   collectCoverage: true,
@@ -84,6 +83,8 @@ const config: Config = {
   //   "cjs",
   //   "jsx",
   //   "ts",
+  //   "mts",
+  //   "cts",
   //   "tsx",
   //   "json",
   //   "node"
@@ -156,8 +157,8 @@ const config: Config = {
 
   // The glob patterns Jest uses to detect test files
   // testMatch: [
-  //   "**/__tests__/**/*.[jt]s?(x)",
-  //   "**/?(*.)+(spec|test).[tj]s?(x)"
+  //   "**/__tests__/**/*.?([mc])[jt]s?(x)",
+  //   "**/?(*.)+(spec|test).?([mc])[jt]s?(x)"
   // ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
@@ -176,9 +177,6 @@ const config: Config = {
 
   // A map from regular expressions to paths to transformers
   // transform: undefined,
-  transform: {
-    '\\.[jt]sx?$': 'babel-jest',
-  }
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
@@ -199,4 +197,4 @@ const config: Config = {
   // watchman: true,
 };
 
-export default config;
+module.exports = config;
