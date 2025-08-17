@@ -1,12 +1,36 @@
 # jest-worker
 
-Module for executing heavy tasks under forked processes in parallel, by providing a `Promise` based interface, minimum overhead, and bound workers.
+* == module /
+  * 👀execute heavy tasks | forked processes -- in -- parallel👀
+  * provide
+    * `Promise` based interface,
+    * minimum overhead,
+    * bound workers
+  * support bound workers
+    * bind a worker
+      * == | certain parameters, 
+        * SAME task will ALWAYS be executed -- by the -- SAME worker
+    * bound workers work -- by using the -- `computeWorkerKey` method's returned string 
+      * if the string was used BEFORE for a task -> the call will be queued -- to the -- related worker / processed the task earlier
+        * else -> the call 
+          * will be executed -- by the -- FIRST available worker
+          * will be sticked | worker / executed it
+            * -> NEXT time will be processed -- by the -- SAME worker
+      * if you have NO preference | worker executing the task -> return `null`
 
-The module works by providing an absolute path of the module to be loaded in all forked processes. All methods are exposed on the parent process as promises, so they can be `await`'ed. Child (worker) methods can either be synchronous or asynchronous.
+* how does it work?
+  * provide a module's absolute path / loaded | ALL forked processes
+  * ALL methods are exposed | parent process -- as -- promises
+    * -> can be `await`'ed
+  * Child (worker) methods' types
+    * synchronous
+    * asynchronous
 
-The module also implements support for bound workers. Binding a worker means that, based on certain parameters, the same task will always be executed by the same worker. The way bound workers work is by using the returned string of the `computeWorkerKey` method. If the string was used before for a task, the call will be queued to the related worker that processed the task earlier; if not, it will be executed by the first available worker, then sticked to the worker that executed it; so the next time it will be processed by the same worker. If you have no preference on the worker executing the task, but you have defined a `computeWorkerKey` method because you want _some_ of the tasks to be sticked, you can return `null` from it.
-
-The list of exposed methods can be explicitly provided via the `exposedMethods` option. If it is not provided, it will be obtained by requiring the child module into the main process, and analyzed via reflection. Check the "minimal example" section for a valid one.
+* `exposedMethods` option
+  * == list of exposed methods / can be EXPLICITLY provided 
+  * if it is NOT provided -> obtained by 
+    * requiring the main process's child module
+    * analyzing via reflection
 
 ## Install
 
@@ -14,34 +38,10 @@ The list of exposed methods can be explicitly provided via the `exposedMethods` 
 yarn add jest-worker
 ```
 
-## Example
-
-This example covers the minimal usage:
-
-### File `parent.js`
-
-```js
-import {Worker as JestWorker} from 'jest-worker';
-
-async function main() {
-  const worker = new JestWorker(require.resolve('./worker'));
-  const result = await worker.hello('Alice'); // "Hello, Alice"
-}
-
-main();
-```
-
-### File `worker.js`
-
-```js
-export function hello(param) {
-  return `Hello, ${param}`;
-}
-```
-
 ## Experimental worker
 
-Node shipped with [`worker_threads`](https://nodejs.org/api/worker_threads.html), a "threading API" that uses `SharedArrayBuffers` to communicate between the main process and its child threads. This feature can significantly improve the communication time between parent and child processes in `jest-worker`.
+* TODO: Node shipped with [`worker_threads`](https://nodejs.org/api/worker_threads.html), a "threading API" that uses `SharedArrayBuffers` to communicate between the main process and its child threads
+* This feature can significantly improve the communication time between parent and child processes in `jest-worker`.
 
 To use `worker_threads` instead of default `child_process` you have to pass `enableWorkerThreads: true` when instantiating the worker.
 
@@ -51,15 +51,21 @@ The `Worker` export is a constructor that is initialized by passing the worker p
 
 ### `workerPath: string | URL` (required)
 
-Node module name or absolute path or file URL of the file to be loaded in the child processes. You can use `require.resolve` to transform a relative path into an absolute one.
+Node module name or absolute path or file URL of the file to be loaded in the child processes
+* You can use `require.resolve` to transform a relative path into an absolute one.
 
 ### `options: Object` (optional)
 
 #### `computeWorkerKey: (method: string, ...args: Array<unknown>) => string | null` (optional)
 
-Every time a method exposed via the API is called, `computeWorkerKey` is also called in order to bound the call to a worker. This is useful for workers that are able to cache the result or part of it. You bound calls to a worker by making `computeWorkerKey` return the same identifier for all different calls. If you do not want to bind the call to any worker, return `null`.
+Every time a method exposed via the API is called, `computeWorkerKey` is also called in order to bound the call to a worker
+* This is useful for workers that are able to cache the result or part of it
+* You bound calls to a worker by making `computeWorkerKey` return the same identifier for all different calls
+* If you do not want to bind the call to any worker, return `null`.
 
-The callback you provide is called with the method name, plus all the rest of the arguments of the call. Thus, you have full control to decide what to return. Check a practical example on bound workers under the "bound worker usage" section.
+The callback you provide is called with the method name, plus all the rest of the arguments of the call
+* Thus, you have full control to decide what to return
+* Check a practical example on bound workers under the "bound worker usage" section.
 
 By default, no process is bound to any worker.
 
