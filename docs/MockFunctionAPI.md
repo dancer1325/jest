@@ -3,19 +3,12 @@ id: mock-function-api
 title: Mock Functions
 ---
 
-Mock functions are also known as "spies", because they let you spy on the behavior of a function that is called indirectly by some other code, rather than only testing the output. You can create a mock function with `jest.fn()`. If no implementation is given, the mock function will return `undefined` when invoked.
-
-import TypeScriptExamplesNote from './_TypeScriptExamplesNote.md';
-
-<TypeScriptExamplesNote />
-
-## Methods
-
-import TOCInline from '@theme/TOCInline';
-
-<TOCInline toc={toc.slice(1)} />
-
----
+* Mock functions OR "spies"
+  * allow you
+    * if function is called indirectly by some other code -> spy on function's behavior 
+      * ❌NOT ONLY testing the output❌
+    * create a mock function -- via -- `jest.fn(implementation)`
+      * ⚠️if NO implementation is given -> | invoke the function, return `undefined`⚠️
 
 ## Reference
 
@@ -175,10 +168,11 @@ The [`restoreMocks`](configuration#restoremocks-boolean) configuration option is
   * [reference](/examples/docs/mock-function-api/reference.test.js)
   * [mockImplementationOnce | ts](/examples/docs/mock-function-api/mockImplementationOnce.test.ts)
 
-### `mockFn.mockName(name)`
+### `mockFn.mockName(name: string)`
 
-Accepts a string to use in test result output in place of `'jest.fn()'` to indicate which mock function is being referenced.
+* == mock function / is referenced
 
+* TODO:
 For example:
 
 ```js
@@ -448,41 +442,17 @@ The [`restoreMocks`](configuration#restoremocks-boolean) configuration option is
 
 ## TypeScript Usage
 
-<TypeScriptExamplesNote />
-
 ### `jest.fn(implementation?)`
 
-Correct mock typings will be inferred if implementation is passed to [`jest.fn()`](JestObjectAPI.md#jestfnimplementation). There are many use cases where the implementation is omitted. To ensure type safety you may pass a generic type argument (also see the examples above for more reference):
-
-```ts
-import {expect, jest, test} from '@jest/globals';
-import type add from './add';
-import calculate from './calc';
-
-test('calculate calls add', () => {
-  // Create a new mock that can be used in place of `add`.
-  const mockAdd = jest.fn<typeof add>();
-
-  // `.mockImplementation()` now can infer that `a` and `b` are `number`
-  // and that the returned value is a `number`.
-  mockAdd.mockImplementation((a, b) => {
-    // Yes, this mock is still adding two numbers but imagine this
-    // was a complex function we are mocking.
-    return a + b;
-  });
-
-  // `mockAdd` is properly typed and therefore accepted by anything
-  // requiring `add`.
-  calculate(mockAdd, 1, 2);
-
-  expect(mockAdd).toHaveBeenCalledTimes(1);
-  expect(mockAdd).toHaveBeenCalledWith(1, 2);
-});
-```
+* if you pass `implementation` -> infer correct mock typings  
+* recommendations
+  * `jest.fn<recommendedGenericType>(implementation?)`
+    * `recommendedGenericType` -> ensure type safety
 
 ### `jest.Mock<T>`
 
-Constructs the type of a mock function, e.g. the return type of `jest.fn()`. It can be useful if you have to defined a recursive mock function:
+Constructs the type of a mock function, e.g. the return type of `jest.fn()`
+* It can be useful if you have to defined a recursive mock function:
 
 ```ts
 import {jest} from '@jest/globals';
@@ -523,7 +493,8 @@ test('returns correct data', () => {
 });
 ```
 
-Types of classes, functions or objects can be passed as type argument to `jest.Mocked<Source>`. If you prefer to constrain the input type, use: `jest.MockedClass<Source>`, `jest.MockedFunction<Source>` or `jest.MockedObject<Source>`.
+Types of classes, functions or objects can be passed as type argument to `jest.Mocked<Source>`
+* If you prefer to constrain the input type, use: `jest.MockedClass<Source>`, `jest.MockedFunction<Source>` or `jest.MockedObject<Source>`.
 
 ### `jest.Replaced<Source>`
 
@@ -560,7 +531,8 @@ it('isLocalhost should detect non-localhost environment', () => {
 
 ### `jest.mocked(source, options?)`
 
-The `mocked()` helper method wraps types of the `source` object and its deep nested members with type definitions of Jest mock function. You can pass `{shallow: true}` as the `options` argument to disable the deeply mocked behavior.
+The `mocked()` helper method wraps types of the `source` object and its deep nested members with type definitions of Jest mock function
+* You can pass `{shallow: true}` as the `options` argument to disable the deeply mocked behavior.
 
 Returns the `source` object.
 

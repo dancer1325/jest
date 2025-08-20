@@ -1,8 +1,10 @@
-// 1.
+// 1. ES modules
 //import { forEach } from './forEach.js';
 // 2. COMMONJS modules
 const forEach = require('./forEach.js');
 
+// 3. ways to create mock functions
+// 3.1 jest.fn()
 const mockCallback = jest.fn(x => 42 + x);
 
 test('forEach mock function', () => {
