@@ -64,3 +64,39 @@
       }
       ```
   * use ['eslint-plugin-jest'](https://github.com/jest-community/eslint-plugin-jest)
+
+TODO: 
+### works with
+#### Babel
+* [pure Babel](../async)
+  * == `@babel/core` + `@babel/preset-env` + `babel-jest`
+* [Babel + TS + React](../typescript)
+
+#### TypeScript
+* [typescript](../typescript)
+
+#### NodeJS
+TODO: NO example yet
+
+#### React
+* [react](../react)
+* [react-testing-library](../react-testing-library)
+* [react-native](../react-native)
+
+#### Angular
+* [angular](../angular)
+
+#### Vue
+TODO: NO example yet
+
+#### Webpack
+TODO: NO example yet
+
+#### Vite
+TODO: NO example yet
+
+#### Parcel
+TODO: NO example yet
+
+#### eslint
+TODO: NO example yet

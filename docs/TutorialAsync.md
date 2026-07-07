@@ -3,80 +3,88 @@ id: tutorial-async
 title: An Async Example
 ---
 
-First, enable Babel support in Jest as documented in the [Getting Started](GettingStarted.md#using-babel) guide.
+* goal
+  * Async Example
 
-Let's implement a module that fetches user data from an API and returns the user name.
+* steps
+  * [enable Babel support | Jest](GettingStarted.md#---via----babel)
+  * implement a 
+    * module / 
+      * fetches user data -- from an API &
+      * returns the user name
 
-```js title="user.js"
-import request from './request';
+        ```js title="user.js"
+        import request from './request';
+      
+        export function getUserName(userID) {
+          return request(`/users/${userID}`).then(user => user.name);
+        }
+        ```
+    * module /
+      * goes to the network & 
+      * fetches some user data
 
-export function getUserName(userID) {
-  return request(`/users/${userID}`).then(user => user.name);
-}
-```
+          ```js title="request.js"
+          const http = require('http');
+          
+          export default function request(url) {
+            return new Promise(resolve => {
+              // This is an example of an http request, for example to fetch
+              // user data from an API.
+              // This module is being mocked in __mocks__/request.js
+              http.get({path: url}, response => {
+                let data = '';
+                response.on('data', _data => (data += _data));
+                response.on('end', () => resolve(data));
+              });
+            });
+          }
+          ```
+    * mock -- to -- our test  
 
-In the above implementation, we expect the `request.js` module to return a promise. We chain a call to `then` to receive the user name.
+      ```js title="__mocks__/request.js"
+      const users = {
+        4: {name: 'Mark'},
+        5: {name: 'Paul'},
+      };
+      
+      export default function request(url) {
+        return new Promise((resolve, reject) => {
+          const userID = parseInt(url.slice('/users/'.length), 10);
+          process.nextTick(() =>
+            users[userID]
+              ? resolve(users[userID])
+              : reject({
+                  error: `User with ${userID} not found.`,
+                }),
+          );
+        });
+      }
+      ```
+    * test
 
-Now imagine an implementation of `request.js` that goes to the network and fetches some user data:
+      ```js title="__tests__/user-test.js"
+      jest.mock('../request');
+      
+      import * as user from '../user';
+      
+      // The assertion for a promise must be returned.
+      it('works with promises', () => {
+        expect.assertions(1);
+        return user.getUserName(4).then(data => expect(data).toBe('Mark'));
+      });
+      ```
 
-```js title="request.js"
-const http = require('http');
+TODO:
 
-export default function request(url) {
-  return new Promise(resolve => {
-    // This is an example of an http request, for example to fetch
-    // user data from an API.
-    // This module is being mocked in __mocks__/request.js
-    http.get({path: url}, response => {
-      let data = '';
-      response.on('data', _data => (data += _data));
-      response.on('end', () => resolve(data));
-    });
-  });
-}
-```
-
-Because we don't want to go to the network in our test, we are going to create a manual mock for our `request.js` module in the `__mocks__` folder (the folder is case-sensitive, `__MOCKS__` will not work). It could look something like this:
-
-```js title="__mocks__/request.js"
-const users = {
-  4: {name: 'Mark'},
-  5: {name: 'Paul'},
-};
-
-export default function request(url) {
-  return new Promise((resolve, reject) => {
-    const userID = parseInt(url.slice('/users/'.length), 10);
-    process.nextTick(() =>
-      users[userID]
-        ? resolve(users[userID])
-        : reject({
-            error: `User with ${userID} not found.`,
-          }),
-    );
-  });
-}
-```
-
-Now let's write a test for our async functionality.
-
-```js title="__tests__/user-test.js"
-jest.mock('../request');
-
-import * as user from '../user';
-
-// The assertion for a promise must be returned.
-it('works with promises', () => {
-  expect.assertions(1);
-  return user.getUserName(4).then(data => expect(data).toBe('Mark'));
-});
-```
-
-We call `jest.mock('../request')` to tell Jest to use our manual mock. `it` expects the return value to be a Promise that is going to be resolved. You can chain as many Promises as you like and call `expect` at any time, as long as you return a Promise at the end.
+* `it` expects the return value to be a Promise that is going to be resolved
+* You can chain as many Promises as you like and call `expect` at any time, 
+as long as you return a Promise at the end.
 
 ## `.resolves`
 
-There is a less verbose way using `resolves` to unwrap the value of a fulfilled promise together with any other matcher. If the promise is rejected, the assertion will fail.
+There is a less verbose way using `resolves` to unwrap the value of a fulfilled promise together with any other matcher
+* If the promise is rejected, the assertion will fail.
 
 ```js
 it('works with resolves', () => {
@@ -87,7 +95,8 @@ it('works with resolves', () => {
 
 ## `async`/`await`
 
-Writing tests using the `async`/`await` syntax is also possible. Here is how you'd write the same examples from before:
+Writing tests using the `async`/`await` syntax is also possible
+* Here is how you'd write the same examples from before:
 
 ```js
 // async/await can be used.
@@ -104,11 +113,14 @@ it('works with async/await and resolves', async () => {
 });
 ```
 
-To enable async/await in your project, install [`@babel/preset-env`](https://babeljs.io/docs/en/babel-preset-env) and enable the feature in your `babel.config.js` file.
+To enable async/await in your project, install [`@babel/preset-env`](https://babeljs.io/docs/en/babel-preset-env) and 
+enable the feature in your `babel.config.js` file.
 
 ## Error handling
 
-Errors can be handled using the `.catch` method. Make sure to add `expect.assertions` to verify that a certain number of assertions are called. Otherwise a fulfilled promise would not fail the test:
+Errors can be handled using the `.catch` method
+* Make sure to add `expect.assertions` to verify that a certain number of assertions are called
+* Otherwise a fulfilled promise would not fail the test:
 
 ```js
 // Testing for async errors using Promise.catch.
@@ -136,7 +148,11 @@ it('tests error with async/await', async () => {
 
 ## `.rejects`
 
-The`.rejects` helper works like the `.resolves` helper. If the promise is fulfilled, the test will automatically fail. `expect.assertions(number)` is not required but recommended to verify that a certain number of [assertions](expect#expectassertionsnumber) are called during a test. It is otherwise easy to forget to `return`/`await` the `.resolves` assertions.
+The`.rejects` helper works like the `.resolves` helper
+* If the promise is fulfilled, the test will automatically fail
+* `expect.assertions(number)` is not required but recommended to verify that 
+a certain number of [assertions](expect#expectassertionsnumber) are called during a test
+* It is otherwise easy to forget to `return`/`await` the `.resolves` assertions.
 
 ```js
 // Testing for async errors using `.rejects`.
@@ -155,7 +171,5 @@ it('tests error with async/await and rejects', async () => {
   });
 });
 ```
-
-The code for this example is available at [examples/async](https://github.com/jestjs/jest/tree/main/examples/async).
 
 If you'd like to test timers, like `setTimeout`, take a look at the [Timer mocks](TimerMocks.md) documentation.

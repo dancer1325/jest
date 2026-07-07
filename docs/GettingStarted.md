@@ -8,17 +8,42 @@
   * vite
   * parcel
 
-* [Examples](/examples/docs/getting-started)
-
 # Babel
 
+* -- thanks to --
+  * [babel-jest](../packages/babel-jest)
+  * [babel-preset-jest](../packages/babel-preset-jest)
+  * [babel-plugin-jest-hoist](../packages/babel-plugin-jest-hoist)
 * Babel
   * [documentation](https://babeljs.io/docs/en/)
   * "babel.config.js"
     * depend on your project
 
+# NodeJS
+
+* -- thanks to --
+  * [jest-environment-node](../packages/jest-environment-node)
+
+# React
+
+* -- thanks to --
+  * [jest-environment-jsdom](../packages/jest-environment-jsdom)
+
+# Angular
+
+* -- thanks to --
+  * `jest-preset-angular`
+
+# Vue
+
+* -- thanks to --
+  * `@vue/vue3-jest`
+
 # Webpack
 
+* -- thanks to --
+  * [jest-transform](../packages/jest-transform)
+  * [jest-resolve](../packages/jest-resolve)
 * uses
   * manage
     * assets,
@@ -38,6 +63,9 @@
 
 # Parcel
 
+* -- thanks to --
+  * [jest-transform](../packages/jest-transform)
+  * [jest-resolve](../packages/jest-resolve)
 * uses
   * manage
     * assets,
@@ -46,6 +74,10 @@
 * zero configuration / requires Parcel
 
 # TypeScript
+
+* -- thanks to --
+  * `ts-jest`
+  * [babel-jest](../packages/babel-jest) + `@babel/preset-typescript`
 
 ## -- via -- `babel`
 
@@ -78,3 +110,8 @@
   * maintained -- by -- [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/jest) 
 * provides
   * Jest globals' types ⚠️WITHOUT importing them⚠️
+
+# eslint
+
+* -- thanks to --
+  * `eslint-plugin-jest`

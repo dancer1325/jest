@@ -2,6 +2,7 @@
 
 'use strict';
 
+// enable Jest can use our MANUAL mock
 jest.mock('../request');
 
 import * as user from '../user';
